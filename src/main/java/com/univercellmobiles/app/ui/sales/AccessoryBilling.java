@@ -62,7 +62,6 @@ public class AccessoryBilling extends JFrame {
 	private JTextField txtPrice;
 	private JTable table;
 	  private JTable tableStock;
-	  static AccessoryBilling frame;
 	  private TableRowSorter<StockTableModel> sorter;
 	private boolean DEBUG = false;
 	InvoiceTableModel im;
@@ -88,7 +87,7 @@ public class AccessoryBilling extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					 frame = new AccessoryBilling();
+					AccessoryBilling frame = new AccessoryBilling();
 				
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -238,6 +237,8 @@ public class AccessoryBilling extends JFrame {
 					finalSP = Float.parseFloat(txtPrice.getText())-Float.parseFloat(txtDiscount.getText());
 					sale.setSalePrice(finalSP);
 					sale.setStockId(selectedStock.getAccStockId());
+					sale.setPhoneModel(selectedStock.getAccModel());
+					sale.setSaleType(selectedStock.getAccType());
 					//sale.setImeiNo(selectedStock.getImeiNo());
 					//sale.setPhoneModel(selectedStock.getPhModel());
 					sale.setSalesDate(new Date());
@@ -293,7 +294,7 @@ public class AccessoryBilling extends JFrame {
 		JButton btnConfirmSale = new JButton("Confirm Sale");
 		btnConfirmSale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ConfirmSale confirmBox = new ConfirmSale(im.data,frame);
+				ConfirmSale confirmBox = new ConfirmSale(im.data);
 				confirmBox.setVisible(true);
 				
 				
@@ -419,7 +420,7 @@ public class AccessoryBilling extends JFrame {
 
 
 
-		private String[] columnNames = { "Stock Id", "Model", "Arrival Date",
+		private String[] columnNames = { "Id", "Model", "Acc Name" ,"Type",
 				"Quantity", "Margin", "Selling Price", "Deal Price",
 				"Description" };
 
@@ -449,16 +450,18 @@ public class AccessoryBilling extends JFrame {
 			case 1:
 				return as.getPhmodelName();
 			case 2:
-				return as.getArrivalDate();
-			case 3:
-				return as.getQuantity();
+				 return as.getAccModel();
+			case 3: 
+				return as.getAccType();
 			case 4:
-				return as.getMargin();
+				return as.getQuantity();
 			case 5:
-				return as.getSp();
+				return as.getMargin();
 			case 6:
-				return as.getDp();
+				return as.getSp();
 			case 7:
+				return as.getDp();
+			case 8:
 				return as.getDesription();
 			default:
 				throw new IndexOutOfBoundsException();
@@ -544,9 +547,9 @@ public class AccessoryBilling extends JFrame {
 
 
 
-			private String[] columnNames = {"Sale Id",
-	                                        "Phone Model",
-	                                        "IMEI",
+			private String[] columnNames = {"Id",
+	                                        "Phone",
+	                                        "Type",
 	                                        "Quantity",
 	                                        "Price",
 	                                        "VAT",
@@ -605,7 +608,7 @@ public class AccessoryBilling extends JFrame {
 	             case 1:
 	                    return invoice.getPhoneModel();
 	             case 2:
-	                    return invoice.getImeiNo();
+	                    return invoice.getSaleType();
 	             case 3:
 	            	 	return invoice.getQty();
 	             case 4:
