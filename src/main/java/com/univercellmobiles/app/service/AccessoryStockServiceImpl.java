@@ -1,5 +1,6 @@
 package com.univercellmobiles.app.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,12 @@ public class AccessoryStockServiceImpl  implements AccessoryStockService {
 		
 	}
 
-	public AccessoryStock getByAccStockId(String accStockId) {
+	public AccessoryStock getByAccStockId(int accStockId) {
 		// TODO Auto-generated method stub
 		return accessoryStockDao.getByAccStockId(accStockId);
 	}
 
-	public void delete(String accStockId) {
+	public void delete(int accStockId) {
 		// TODO Auto-generated method stub
 		accessoryStockDao.delete(accStockId);
 		
@@ -43,6 +44,26 @@ public class AccessoryStockServiceImpl  implements AccessoryStockService {
 	public List<AccessoryStock> getAllDetails() {
 		// TODO Auto-generated method stub
 		return accessoryStockDao.getAllDetails();
+	}
+
+	public List<AccessoryStock> getAllAvailable() {
+		// TODO Auto-generated method stub
+		return accessoryStockDao.getAllAvailable();
+	}
+
+	public float getCurrentStockValue() {
+		// TODO Auto-generated method stub
+		return accessoryStockDao.getCurrentStockValue();
+	}
+
+	public int sellStock(int accStockId) {
+		// TODO Auto-generated method stub
+		return accessoryStockDao.sellStock(accStockId);
+	}
+
+	public List<AccessoryStock> getPurchaseByRange(Date fromDate, Date toDate) {
+		// TODO Auto-generated method stub
+		return accessoryStockDao.getPurchaseByRange(fromDate, toDate);
 	}
 
 }

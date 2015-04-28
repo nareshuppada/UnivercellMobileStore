@@ -28,10 +28,13 @@ import javax.swing.event.DocumentListener;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.univercellmobiles.app.beans.AccessorySales;
 import com.univercellmobiles.app.beans.Sales;
+import com.univercellmobiles.app.service.AccessorySalesService;
 import com.univercellmobiles.app.service.AccessoryStockService;
 import com.univercellmobiles.app.service.PhoneStockService;
 import com.univercellmobiles.app.service.SalesService;
+
 import java.awt.Window.Type;
 
 public class ConfirmSale extends JFrame implements ActionListener {
@@ -50,10 +53,13 @@ public class ConfirmSale extends JFrame implements ActionListener {
 	float billAmount = 0;
 	SalesBilling salesRef;
 	AccessoryBilling accBillingRef;
-	List<Sales> sales = null;
+	List<Sales> phoneSales = null;
 	 ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 	 SalesService ss = (SalesService) context.getBean("salesService");
 	 PhoneStockService pss = (PhoneStockService) context.getBean("phoneStockService");
+	 AccessorySalesService ass = (AccessorySalesService) context.getBean("accessorySalesService");
+	 AccessoryStockService acc_stock_service = (AccessoryStockService) context.getBean("accessoryStockService");
+	private List<AccessorySales> accSales = null;
 	/**
 	 * Launch the application.
 	 */
@@ -74,25 +80,27 @@ public class ConfirmSale extends JFrame implements ActionListener {
 	 * Create the frame.
 	 * @param frame 
 	 */
-	public ConfirmSale(final List<Sales> sales, Object frame) {
+	public ConfirmSale(final List<?> sales,  final Object frame) {
 		setType(Type.POPUP);
 		if(frame instanceof SalesBilling){
 			salesRef = (SalesBilling)frame;
+			this.phoneSales =(List<Sales>) sales;
 		}
 		else{
 			accBillingRef =(AccessoryBilling)frame;
+			this.accSales = (List<AccessorySales>) sales;
 		}
 		
 		//setAlwaysOnTop(true);
 		setTitle("Confirm Payment");
-		this.sales =sales;
+		
 		setBounds(100, 100, 390, 300);
 		getContentPane().setLayout(null);
 		JPanel panel = new JPanel();
 		panel.setBounds(10, 11, 354, 239);
 		getContentPane().add(panel);
 		panel.setLayout(null);
-		final SalesService ss =  (SalesService) context.getBean("salesService");
+		
 		
 		
 		JLabel lblModeOfPayment = new JLabel("Mode Of Payment");
@@ -114,9 +122,17 @@ public class ConfirmSale extends JFrame implements ActionListener {
 		 paymentGroup.add(rdbtnCard);
 		 paymentGroup.add(rdbtnCash);
 		 
-		 for(Sales sale: sales){
-			 billAmount+=sale.getSalePrice();
-		 }
+		 if(frame instanceof SalesBilling){
+			 for(Sales sale: phoneSales){
+				 billAmount+=sale.getSalePrice();
+			 }
+			}
+			else{
+				 for(AccessorySales sale: accSales){
+					 billAmount+=sale.getSalePrice();
+				 }
+			}
+		
 		
 		txtBillingAmount = new JTextField();
 		txtBillingAmount.setForeground(Color.GREEN);
@@ -210,10 +226,22 @@ public class ConfirmSale extends JFrame implements ActionListener {
 				}
 				if(sales!=null && sales.size()>0){
 					btnConfirmPayment.setEnabled(false);
-				for(Sales sale : sales){
-					ss.add(sale);
-					pss.sellStock(sale.getStockId());
-				}
+					
+					if(frame instanceof SalesBilling){
+						 for(Sales sale: phoneSales){
+							 ss.add(sale);
+								pss.sellStock(sale.getStockId());
+						 }
+						}
+						else{
+							 for(AccessorySales sale: accSales){
+								 ass.add(sale);
+								  acc_stock_service.sellStock(sale.getStockId());
+							 }
+						}
+					
+					
+				
 				
 				closePayment();
 				
