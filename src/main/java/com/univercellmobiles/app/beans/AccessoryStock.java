@@ -17,16 +17,31 @@ public class AccessoryStock {
 	@GeneratedValue
 	private int accStockId;
 	private Date arrivalDate;
-	
 	private String accModel;
 	private String phmodelName;
+	private String accType;
 	private Date soldDate;
 	private String desription;
 	private Float margin;
 	private Float dp;
 	private Float sp;
 	private int quantity;
+	private int available;
 	
+	
+	
+	/**
+	 * @return the available
+	 */
+	public int getAvailable() {
+		return available;
+	}
+	/**
+	 * @param available the available to set
+	 */
+	public void setAvailable(int available) {
+		this.available = available;
+	}
 	/**
 	 * @return the quantity
 	 */
@@ -63,6 +78,8 @@ public class AccessoryStock {
 	public void setAccStockId(int accStockId) {
 		this.accStockId = accStockId;
 	}
+	
+	
 	/**
 	 * @return the arrivalDate
 	 */
@@ -80,6 +97,18 @@ public class AccessoryStock {
 	 */
 	public String getAccModel() {
 		return accModel;
+	}
+	/**
+	 * @return the accType
+	 */
+	public String getAccType() {
+		return accType;
+	}
+	/**
+	 * @param accType the accType to set
+	 */
+	public void setAccType(String accType) {
+		this.accType = accType;
 	}
 	/**
 	 * @param accModel the accModel to set
