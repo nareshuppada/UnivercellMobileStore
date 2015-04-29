@@ -16,6 +16,7 @@ public interface AccessoryStockDao {
 		public float getCurrentStockValue();
 		public int sellStock(int phStockId);
 		public List<AccessoryStock> getPurchaseByRange(Date fromDate, Date toDate);
+		public List<String> getAllAccNames();
 
 
 }

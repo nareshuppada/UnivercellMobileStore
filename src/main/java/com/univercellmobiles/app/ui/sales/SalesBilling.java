@@ -105,6 +105,7 @@ public class SalesBilling extends JFrame {
 	 * Create the frame.
 	 */
 	public SalesBilling() {
+		frame = this;
 		setTitle("Phone Billing");
 		//setAlwaysOnTop(true);
 		setType(Type.POPUP);

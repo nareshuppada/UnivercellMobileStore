@@ -66,4 +66,9 @@ public class AccessoryStockServiceImpl  implements AccessoryStockService {
 		return accessoryStockDao.getPurchaseByRange(fromDate, toDate);
 	}
 
+	public List<String> getAllAccNames() {
+		// TODO Auto-generated method stub
+		return accessoryStockDao.getAllAccNames();
+	}
+
 }

@@ -16,5 +16,6 @@ public interface AccessoryStockService {
 		public float getCurrentStockValue();
 		public int sellStock(int accStockId);
 		public List<AccessoryStock> getPurchaseByRange(Date fromDate, Date toDate);
+		public List<String> getAllAccNames();
 
 }

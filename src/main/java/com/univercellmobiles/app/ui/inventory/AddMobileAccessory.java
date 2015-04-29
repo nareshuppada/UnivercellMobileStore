@@ -18,6 +18,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -39,11 +40,12 @@ import com.univercellmobiles.app.service.AccessoryStockService;
 import com.univercellmobiles.app.service.PhoneModelService;
 import com.univercellmobiles.app.ui.common.custom.AutocompleteJComboBox;
 import com.univercellmobiles.app.ui.common.custom.StringSearchable;
+import com.univercellmobiles.app.ui.common.custom.Searchable;
 
 public class AddMobileAccessory extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField txtQuantiy, txtPlace, txtInvoice, txtAccessoryName;
+	private JTextField txtQuantiy, txtPlace, txtInvoice;
 	private boolean DEBUG = false;
 	StockModel sm;
 	private Float totalCost = (float) 0.0;
@@ -51,6 +53,7 @@ public class AddMobileAccessory extends JFrame {
 	JLabel lblMarginValue;
 	private NumberFormat moneyFormat, percentFormat;
 	AutocompleteJComboBox comboModelSearch;
+	AutocompleteJComboBox accNameSearchCombo;
 	JFormattedTextField ftfDP;
 	JFormattedTextField ftfSP;
 	JFormattedTextField ftfMargin;
@@ -71,6 +74,8 @@ public class AddMobileAccessory extends JFrame {
 
 	PhoneModelService pms = (PhoneModelService) context
 			.getBean("phoneModelService");
+	
+	
 
 	/**
 	 * Launch the application.
@@ -94,8 +99,6 @@ public class AddMobileAccessory extends JFrame {
 	 */
 	@SuppressWarnings("unchecked")
 	public AddMobileAccessory() {
-		
-		setAlwaysOnTop(true);
 		setType(Type.POPUP);
 		setTitle("Add Accessroy Stock ");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -107,7 +110,6 @@ public class AddMobileAccessory extends JFrame {
 		percentFormat.setMaximumFractionDigits(2);
 		moneyFormat = NumberFormat.getInstance();
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 771, 707);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		sm = new StockModel();
@@ -122,19 +124,27 @@ public class AddMobileAccessory extends JFrame {
 		panel.add(lblModel);
 
 		List<String> modelsList = new ArrayList<String>();
+		List<String> accNameList = new ArrayList<String>();
 
 		// PhoneModelService pms = (PhoneModelService)
 		// context.getBean("phoneModelService");
 
 		modelsList = pms.getAllModelNames();
+		accNameList = accessoryService.getAllAccNames();
 		System.out.println("modelsList" + modelsList.toString());
 
-		StringSearchable searchable = new StringSearchable(modelsList);
+		StringSearchable searchablePhoneModel = new StringSearchable(modelsList);
 
-		comboModelSearch = new AutocompleteJComboBox(searchable);
+		comboModelSearch = new AutocompleteJComboBox(searchablePhoneModel);
 
 		comboModelSearch.setBounds(279, 49, 415, 22);
 		panel.add(comboModelSearch);
+		
+		StringSearchable searchableAccModel = new StringSearchable(accNameList);
+		accNameSearchCombo = new AutocompleteJComboBox(searchableAccModel);
+		accNameSearchCombo.setBounds(279, 107, 415, 22);
+		panel.add(accNameSearchCombo);
+
 
 		JLabel lblQuantiy = new JLabel("Quantiy");
 		lblQuantiy.setBounds(67, 140, 138, 22);
@@ -160,18 +170,46 @@ public class AddMobileAccessory extends JFrame {
 		JButton btnAddStock = new JButton("Add Accessory");
 		btnAddStock.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(accNameSearchCombo.getSelectedItem().toString().equals("")){
+					JOptionPane.showMessageDialog(null, "Please input Accessory Name", 
+                            "Invalid Accessory Name",
+                            JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				
+				
+				if(txtQuantiy.getText().equals("")||txtQuantiy.getText().equals("0")){
+					JOptionPane.showMessageDialog(null, "Please input valid Quantity", 
+                            "Invalid Accessory Quantity",
+                            JOptionPane.WARNING_MESSAGE);
+					return;
+				}
 				AccessoryStock stock = new AccessoryStock();
 
 				stock.setPhmodelName(comboModelSearch.getSelectedItem()
 						.toString());
-				stock.setAccModel(txtAccessoryName.getText());
+				stock.setAccModel(accNameSearchCombo.getSelectedItem().toString());
 				stock.setAccType(comboAccType.getSelectedItem().toString());
 				stock.setQuantity(Integer.parseInt(txtQuantiy.getText()));
-				float marginper = Float.parseFloat(ftfMargin.getText().replace(
-						",", ""));
-				float dp = Float.parseFloat(ftfDP.getText().replace(",", ""));
+				
+				String marginString = ftfMargin.getText();
+				String dpString = ftfDP.getText();
+				String spString = ftfSP.getText();
+				float marginper =0;
+				float dp=0;
+				float sp =0;
+				if(!marginString.equals("")){
+					marginper = Float.parseFloat(marginString.replace(",", ""));
+				}
+				if(!dpString.equals("")){
+					dp =Float.parseFloat(dpString.replace(",", "")) ;
+				}
+				if(!spString.equals("")){
+					sp = Float.parseFloat(spString.replace(",", ""));
+				}
+				float profit = sp-dp;
 				stock.setMargin(marginper);
-				stock.setSp(Float.parseFloat(ftfSP.getText().replace(",", "")));
+				stock.setSp(sp);
 				stock.setDp(dp);
 				Date arvDate = (Date) datePicker.getModel().getValue();
 				stock.setArrivalDate(arvDate);
@@ -185,14 +223,15 @@ public class AddMobileAccessory extends JFrame {
 				stock.setAvailable(qty);
 				stock.setDesription(textAreaDesc.getText());
 				stock.setSp(Float.parseFloat(ftfSP.getText().replace(",", "")));
-				float margin = marginper * dp / 100;
-				stock.setMargin(margin);
+				float margin =profit+ marginper*dp/100;
+				stock.setMarginAmount(margin);
 				totalCost += stock.getSp();
 				accessoryService.add(stock);
 				lblCost.setText(totalCost.toString());
 				sm.addRow(stock);
 				sm.fireTableDataChanged();
-
+				accNameSearchCombo.setSelectedIndex(0);
+				txtQuantiy.setText("0");
 			}
 		});
 		btnAddStock.setBounds(490, 432, 204, 23);
@@ -286,12 +325,8 @@ public class AddMobileAccessory extends JFrame {
 		JLabel lblAccessoryName = new JLabel("Accessory Name");
 		lblAccessoryName.setBounds(67, 107, 138, 22);
 		panel.add(lblAccessoryName);
-
-		txtAccessoryName = new JTextField();
-		txtAccessoryName.setBounds(279, 107, 415, 23);
-		panel.add(txtAccessoryName);
-		txtAccessoryName.setColumns(10);
-
+		
+		
 		DocumentListener documentListener = new DocumentListener() {
 			public void changedUpdate(DocumentEvent documentEvent) {
 			}
@@ -376,7 +411,7 @@ public class AddMobileAccessory extends JFrame {
 			case 5:
 				return as.getQuantity();
 			case 6:
-				return as.getMargin();
+				return as.getMarginAmount();
 			case 7:
 				return as.getSp();
 			case 8:

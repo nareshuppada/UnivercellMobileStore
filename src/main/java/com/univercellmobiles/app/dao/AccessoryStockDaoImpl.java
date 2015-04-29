@@ -90,6 +90,11 @@ public class AccessoryStockDaoImpl implements AccessoryStockDao {
 				return getCurrentSession().createQuery(query).list();
 	}
 
+	public List<String> getAllAccNames() {
+		// TODO Auto-generated method stub
+		return getCurrentSession().createQuery("select distinct(accModel) from AccessoryStock").list();
+	}
+
 	
 
 		

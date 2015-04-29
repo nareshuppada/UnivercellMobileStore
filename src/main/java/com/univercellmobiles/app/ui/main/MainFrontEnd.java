@@ -22,6 +22,7 @@ import com.univercellmobiles.app.ui.funds.BalanceSheet;
 import com.univercellmobiles.app.ui.funds.ExpenseManagement;
 import com.univercellmobiles.app.ui.funds.FixedAssetManagment;
 import com.univercellmobiles.app.ui.funds.InvestmentManagement;
+import com.univercellmobiles.app.ui.inventory.AccessorySearch;
 import com.univercellmobiles.app.ui.inventory.AddMobileAccessory;
 import com.univercellmobiles.app.ui.inventory.AddStock;
 import com.univercellmobiles.app.ui.inventory.BrandManager;
@@ -162,7 +163,7 @@ public class MainFrontEnd {
 		JButton btnSearchPhones = new JButton("Search Phones");
 		btnSearchPhones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				StockSearch frame = new StockSearch();
+				AccessorySearch frame = new AccessorySearch();
 				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				RefineryUtilities.centerFrameOnScreen(frame);
 				frame.setVisible(true);

@@ -104,7 +104,8 @@ public class AccessoryBilling extends JFrame {
 	 * Create the frame.
 	 */
 	public AccessoryBilling() {
-		setTitle("Phone Billing");
+		frame = this;
+		setTitle("Accessory Billing");
 		// setAlwaysOnTop(true);
 		setType(Type.POPUP);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -131,7 +132,9 @@ public class AccessoryBilling extends JFrame {
 		List<String> modelsList = new ArrayList<String>();
 
 		PhoneModelService pms = (PhoneModelService) context
-				.getBean("phoneModelService");
+				.getBean("phoneModelService");// this needs to be changed to AccessroyStock Service 
+		// Need to filter by Accessory Stock first
+		// Next by Accessory Name
 
 		modelsList = pms.getAllModelNames();
 

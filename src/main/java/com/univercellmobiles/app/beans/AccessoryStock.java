@@ -23,6 +23,7 @@ public class AccessoryStock {
 	private Date soldDate;
 	private String desription;
 	private Float margin;
+	private Float marginAmount;
 	private Float dp;
 	private Float sp;
 	private int quantity;
@@ -194,6 +195,18 @@ public class AccessoryStock {
 				+ accModel + ", phmodelName=" + phmodelName + ", desription="
 				+ desription + ", margin=" + margin + ", dp=" + dp + ", sp="
 				+ sp + "]";
+	}
+	/**
+	 * @return the marginAmount
+	 */
+	public Float getMarginAmount() {
+		return marginAmount;
+	}
+	/**
+	 * @param marginAmount the marginAmount to set
+	 */
+	public void setMarginAmount(Float marginAmount) {
+		this.marginAmount = marginAmount;
 	}
 	
 	
