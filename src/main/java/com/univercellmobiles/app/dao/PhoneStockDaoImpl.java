@@ -76,7 +76,7 @@ public class PhoneStockDaoImpl implements PhoneStockDao {
 
 	public float getCurrentStockValue() {
 		// TODO Auto-generated method stub
-		return Float.parseFloat(getCurrentSession().createQuery("select sum(dp) from PhoneStock").list().get(0).toString());
+		return Float.parseFloat(getCurrentSession().createQuery("select sum(dp) from PhoneStock where available>0").list().get(0).toString());
 	}
 
 	public List<PhoneStock> getPurchaseByRange(Date fromDate, Date toDate) {

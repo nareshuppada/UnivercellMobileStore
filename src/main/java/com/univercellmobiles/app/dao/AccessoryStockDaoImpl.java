@@ -64,7 +64,7 @@ public class AccessoryStockDaoImpl implements AccessoryStockDao {
 
 	public float getCurrentStockValue() {
 		// TODO Auto-generated method stub
-		return Float.parseFloat(getCurrentSession().createQuery("select sum(dp*quantity) from AccessoryStock").list().get(0).toString());
+		return Float.parseFloat(getCurrentSession().createQuery("select sum(dp*quantity) from AccessoryStock where quantity>0").list().get(0).toString());
 	}
 
 	public int sellStock(int accStockId) {

@@ -55,4 +55,9 @@ public class AccessorySalesServiceImpl implements AccessorySalesService {
 		return accessorySalesDao.getSalesByRange(fromDate,toDate);
 	}
 
+	public float getTodaysProfit() {
+		// TODO Auto-generated method stub
+		return accessorySalesDao.getTodaysProfit();
+	}
+
 }

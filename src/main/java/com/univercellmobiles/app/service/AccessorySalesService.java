@@ -15,5 +15,6 @@ public interface AccessorySalesService {
     public List<AccessorySales>    getAllDetails();
 	public float getAllProfit();
 	public List<AccessorySales> getSalesByRange(Date fromDate, Date toDate);
+	public float getTodaysProfit();
 
 }

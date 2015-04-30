@@ -142,11 +142,11 @@ public class BalanceSheet extends JFrame {
 				f.setReturns(Float.parseFloat(txtReturns.getText().equals("")?"0":txtReturns.getText()));
 				f.setStockValue(pss.getCurrentStockValue());
 				f.setUnivercellfunds(Float.parseFloat(txtUniFunds.getText().equals("")?"0":txtUniFunds.getText()));
-				f.setProfit(ss.getAllProfit());
+				f.setProfit(ss.getTodaysProfit());
 			    f.setDeposits(Float.parseFloat(txtDeposits.getText().equals("")?"0":txtDeposits.getText()));
 			    f.setCash(Float.parseFloat(txtCash.getText().equals("")?"0":txtCash.getText()));
 			    f.setAccStockValue(ass.getCurrentStockValue());
-			    f.setAccProfit(asaless.getAllProfit());
+			    f.setAccProfit(asaless.getTodaysProfit());
 			    f.setToday(new Date());
 				fs.add(f);
 				fm.addRow(f);
