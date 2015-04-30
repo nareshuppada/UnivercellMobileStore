@@ -1,6 +1,7 @@
 package com.univercellmobiles.app.dao;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -63,7 +64,7 @@ public class AccessoryStockDaoImpl implements AccessoryStockDao {
 
 	public float getCurrentStockValue() {
 		// TODO Auto-generated method stub
-		return Float.parseFloat(getCurrentSession().createQuery("select sum(dp) from AccessoryStock").list().get(0).toString());
+		return Float.parseFloat(getCurrentSession().createQuery("select sum(dp*quantity) from AccessoryStock").list().get(0).toString());
 	}
 
 	public int sellStock(int accStockId) {
@@ -81,6 +82,10 @@ public class AccessoryStockDaoImpl implements AccessoryStockDao {
 
 	@SuppressWarnings("unchecked")
 	public List<AccessoryStock> getPurchaseByRange(Date fromDate, Date toDate) {
+		Calendar cal = Calendar.getInstance();
+        cal.setTime(toDate);
+        cal.add(Calendar.DATE, 1);
+        toDate = cal.getTime();	
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
 				 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

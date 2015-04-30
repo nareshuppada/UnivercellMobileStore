@@ -259,8 +259,7 @@ public class AccessorySearch extends JFrame {
 		RowFilter<StockTableModel, Object> rf = null;
 		// If current expression doesn't parse, don't update.
 		try {
-			rf = RowFilter.regexFilter(comboModelSearch.getSelectedItem()
-					.toString(), 1);
+			 rf = RowFilter.regexFilter("(?i)"+comboModelSearch.getSelectedItem().toString().replaceAll("\\(", "\\\\(").replaceAll("\\)", "\\\\)"), 1);
 		} catch (java.util.regex.PatternSyntaxException e) {
 			return;
 		}

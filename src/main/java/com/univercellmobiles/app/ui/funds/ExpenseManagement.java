@@ -105,6 +105,8 @@ public class ExpenseManagement extends JFrame {
 		expenseType.add("Shop Rent");
 		expenseType.add("Staff Salary");
 		expenseType.add("Shop Utility Bills");
+		expenseType.add("EMI Payment");
+		expenseType.add("Transport Expense");
 		expenseType.add("Misc");
 		txs = (TransactionService) context.getBean("transactionService");
 

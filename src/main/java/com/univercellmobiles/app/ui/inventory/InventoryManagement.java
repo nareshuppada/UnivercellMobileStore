@@ -53,13 +53,14 @@ import java.awt.Dimension;
 import javax.swing.JTextArea;
 import java.awt.Window.Type;
 
-public class StockSearch extends JFrame {
+public class InventoryManagement extends JFrame {
 	private JTextField txtPrice;
 	private JTable table;
 	  private JTable tableStock;
 	  private TableRowSorter<StockTableModel> sorter;
 	  JTextArea txtOffer;
 	  JTextArea txtDesc;
+	  PhoneStock currentSelection=null;
 	private boolean DEBUG = false;
 	private Float totalCost = (float) 0.0;
 	AutocompleteJComboBox comboModelSearch;
@@ -69,6 +70,8 @@ public class StockSearch extends JFrame {
 		PhoneStockService pss = (PhoneStockService) context.getBean("phoneStockService");
 		SalesService ss =  (SalesService) context.getBean("salesService");
 		private JTextField txtModel;
+		private JTextField txtDP;
+		private JTextField txtIEMI;
 	
 	
 	/**
@@ -78,7 +81,7 @@ public class StockSearch extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					StockSearch frame = new StockSearch();
+					InventoryManagement frame = new InventoryManagement();
 				
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -91,10 +94,10 @@ public class StockSearch extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public StockSearch() {
+	public InventoryManagement() {
 		setAlwaysOnTop(true);
 		setType(Type.POPUP);
-		setTitle("Phone Stock Search");
+		setTitle("Inventory Management");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 771, 707);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
@@ -164,8 +167,11 @@ public class StockSearch extends JFrame {
 	        	        	                        } else {
 	        	        	                            int modelRow = 
 	        	        	                            		tableStock.convertRowIndexToModel(viewRow);
+	        	        	                            currentSelection = stockModel.getRow(modelRow);
 	        	        	                            PhoneStock ps = stockModel.getRow(modelRow);
 	        	        	                            txtPrice.setText(ps.getSp().toString());
+	        	        	                            txtDP.setText(ps.getDp().toString());
+	        	        	                            txtIEMI.setText(ps.getImeiNo());
 	        	        	                            txtDesc.setText(ps.getDescription());
 	        	        	                            txtOffer.setText(ps.getOffer());
 	        	        	                            txtModel.setText(ps.getPhModel());
@@ -201,8 +207,7 @@ public class StockSearch extends JFrame {
 		panel.add(lblPrice);
 		
 		txtPrice = new JTextField();
-		txtPrice.setEditable(false);
-		txtPrice.setBounds(265, 375, 187, 20);
+		txtPrice.setBounds(265, 375, 128, 20);
 		panel.add(txtPrice);
 		txtPrice.setColumns(10);
 		
@@ -234,6 +239,59 @@ public class StockSearch extends JFrame {
 		panel.add(txtModel);
 		txtModel.setColumns(10);
 		
+		JButton btnUpdate = new JButton("Update");
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(currentSelection!=null){
+					currentSelection.setSp(Float.valueOf(txtPrice.getText()));
+					currentSelection.setDp(Float.valueOf(txtDP.getText()));
+					currentSelection.setImeiNo(txtIEMI.getText());
+					currentSelection.setOffer(txtOffer.getText());
+					currentSelection.setDescription(txtDesc.getText());
+					pss.update(currentSelection);
+					currentSelection=null;
+					stockModel.refreshTableData();
+					stockModel.fireTableDataChanged();
+					
+					//currentSelection.set(Float.valueOf(txtPrice.getText()));
+					
+				}
+			}
+		});
+		btnUpdate.setBounds(564, 526, 128, 23);
+		panel.add(btnUpdate);
+		
+		JButton btnDelete = new JButton("Delete");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(currentSelection!=null){
+				pss.delete(currentSelection.getId());
+				stockModel.refreshTableData();
+				stockModel.fireTableDataChanged();
+				}
+			}
+		});
+		btnDelete.setBounds(564, 296, 128, 23);
+		panel.add(btnDelete);
+		
+		JLabel lblDp = new JLabel("DP");
+		lblDp.setBounds(523, 378, 42, 14);
+		panel.add(lblDp);
+		
+		txtDP = new JTextField();
+		txtDP.setBounds(575, 375, 117, 20);
+		panel.add(txtDP);
+		txtDP.setColumns(10);
+		
+		JLabel lblIemiNo = new JLabel("IEMI No.");
+		lblIemiNo.setBounds(67, 316, 128, 14);
+		panel.add(lblIemiNo);
+		
+		txtIEMI = new JTextField();
+		txtIEMI.setBounds(265, 313, 289, 20);
+		panel.add(txtIEMI);
+		txtIEMI.setColumns(10);
+		
 		
 	}
 	
@@ -245,7 +303,7 @@ public class StockSearch extends JFrame {
         RowFilter<StockTableModel, Object> rf = null;
         //If current expression doesn't parse, don't update.
         try {
-        	 rf = RowFilter.regexFilter("(?i)"+comboModelSearch.getSelectedItem().toString().replaceAll("\\(", "\\\\(").replaceAll("\\)", "\\\\)"), 1);
+            rf = RowFilter.regexFilter("(?i)"+comboModelSearch.getSelectedItem().toString().replaceAll("\\(", "\\\\(").replaceAll("\\)", "\\\\)"), 1);
         } catch (java.util.regex.PatternSyntaxException e) {
             return;
         }
@@ -273,7 +331,8 @@ public class StockSearch extends JFrame {
         private String[] columnNames = {"Stock Id",
                                         "Model",
                                         "IMEI",
-                                        "Selling Price"
+                                        "Selling Price",
+                                        "DP"
                                         };
         
        
@@ -283,7 +342,12 @@ public class StockSearch extends JFrame {
         StockTableModel(){
         	data = pss.getAllAvailable();
         }
-        public int getColumnCount() {
+        public void refreshTableData() {
+			// TODO Auto-generated method stub
+        	data = pss.getAllAvailable();
+			
+		}
+		public int getColumnCount() {
             return columnNames.length;
         }
 
@@ -315,9 +379,8 @@ public class StockSearch extends JFrame {
                     return ps.getImeiNo();
              case 3:
             	 	return ps.getSp();
+           
              case 4:
-            	 	return ps.getDescription();
-             case 5:
          	 	return ps.getDp();
            
              default:
@@ -341,15 +404,15 @@ public class StockSearch extends JFrame {
          * then the last column would contain text ("true"/"false"),
          * rather than a check box.
          */
-        public Class getColumnClass(int c) {
+      /*  public Class getColumnClass(int c) {
             return getValueAt(0, c).getClass();
-        }
+        }*/
 
         /*
          * Don't need to implement this method unless your table's
          * editable.
          */
-        public boolean isCellEditable(int row, int col) {
+       /* public boolean isCellEditable(int row, int col) {
             //Note that the data/cell address is constant,
             //no matter where the cell appears onscreen.
             if (col < 2) {
@@ -357,7 +420,7 @@ public class StockSearch extends JFrame {
             } else {
                 return true;
             }
-        }
+        }*/
 
         /*
          * Don't need to implement this method unless your table's

@@ -105,7 +105,8 @@ public class InvestmentManagement extends JFrame {
 		List<String> expenseType = new ArrayList<String>();
 		expenseType.add("Funds from Loan");
 		expenseType.add("Funds Borrowed");
-		expenseType.add("Funds out");
+		expenseType.add("Investment WithDrawn");
+		expenseType.add("Goods Bought on Credit Card");
 		expenseType.add("Funds from Misc");
 		txs = (TransactionService) context.getBean("transactionService");
 
@@ -132,7 +133,11 @@ public class InvestmentManagement extends JFrame {
 		btnAddExpense.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Transactions tx = new Transactions();
-				tx.setAmount(Float.parseFloat(txtAmount.getText()));
+				Float amt =Float.parseFloat(txtAmount.getText());
+				if("Investment WithDrawn".equals(comboExpenseType.getSelectedItem().toString())){
+					amt =-amt;
+				}
+				tx.setAmount(amt);
 				tx.setDescription(textAreaDesc.getText());
 				tx.setTypeDetails(comboExpenseType.getSelectedItem().toString());
 				tx.setExpenseDate(new Date());
@@ -220,7 +225,7 @@ public class InvestmentManagement extends JFrame {
 
 
 	class TransactionModel extends AbstractTableModel {
-		private String[] columnNames = { "Expense Id", "Type", "Desc", "Amount",
+		private String[] columnNames = { "Investment Id", "Type", "Desc", "Amount",
 				"Date" };
 
 		Transactions trans = new Transactions();

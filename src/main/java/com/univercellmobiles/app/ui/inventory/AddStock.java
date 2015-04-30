@@ -217,6 +217,12 @@ public class AddStock extends JFrame {
 				}
 				PhoneStock stock = new PhoneStock();
 				stock.setImeiNo(txtIMEI.getText());
+				if(comboModelSearch.getSelectedItem()==null){
+					JOptionPane.showMessageDialog(null, "Please Select a Phone Model.", 
+                            "InCorrect Phone Model",
+                            JOptionPane.WARNING_MESSAGE);
+					return;
+				}
 				stock.setPhModel(comboModelSearch.getSelectedItem().toString());
 				String marginString = ftfMargin.getText();
 				String dpString = ftfDP.getText();

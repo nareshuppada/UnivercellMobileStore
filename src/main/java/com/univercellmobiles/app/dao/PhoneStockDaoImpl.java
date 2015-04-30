@@ -1,6 +1,7 @@
 package com.univercellmobiles.app.dao;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -79,6 +80,10 @@ public class PhoneStockDaoImpl implements PhoneStockDao {
 	}
 
 	public List<PhoneStock> getPurchaseByRange(Date fromDate, Date toDate) {
+		Calendar cal = Calendar.getInstance();
+        cal.setTime(toDate);
+        cal.add(Calendar.DATE, 1);
+        toDate = cal.getTime();	
 		// TODO Auto-generated method stub
 		 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		 //between str_to_date('2015-03-16','%Y-%m-%d') and  str_to_date('2015-04-16','%Y-%m-%d');

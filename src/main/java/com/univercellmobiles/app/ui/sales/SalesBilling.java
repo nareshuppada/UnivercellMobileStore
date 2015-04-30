@@ -437,7 +437,7 @@ public class SalesBilling extends JFrame {
         RowFilter<StockTableModel, Object> rf = null;
         //If current expression doesn't parse, don't update.
         try {
-            rf = RowFilter.regexFilter(comboModelSearch.getSelectedItem().toString(), 1);
+        	 rf = RowFilter.regexFilter("(?i)"+comboModelSearch.getSelectedItem().toString().replaceAll("\\(", "\\\\(").replaceAll("\\)", "\\\\)"), 1);
         } catch (java.util.regex.PatternSyntaxException e) {
             return;
         }
@@ -648,7 +648,18 @@ public class SalesBilling extends JFrame {
 	             case 3:
 	            	 	return invoice.getQty();
 	             case 4:
-	            	 	return ((invoice.getSalePrice()*100)/(invoice.getVat()+100));
+	            	 	String discString = txtDiscount.getText();
+						String spString = txtPrice.getText();
+						float sp = 0;
+						float disc = 0;
+						if(!spString.equals("")){
+							sp = Float.parseFloat(spString);
+						}
+						if(!discString.equals("")){
+							disc = Float.parseFloat(discString);
+						}
+						Float finalSP = sp-disc;
+	            	 	return ((finalSP*100)/(invoice.getVat()+100));
 	             case 5:
 	            	 	return (invoice.getVat());
 	             case 6 : 

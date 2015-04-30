@@ -107,6 +107,7 @@ public class FixedAssetManagment extends JFrame {
 		expenseType.add("Furniture Assets");
 		expenseType.add("Electrical Assets");
 		expenseType.add("Shop Advance");
+		expenseType.add("Interiors");
 		expenseType.add("Misc");
 		txs = (TransactionService) context.getBean("transactionService");
 
@@ -221,7 +222,7 @@ public class FixedAssetManagment extends JFrame {
 
 
 	class TransactionModel extends AbstractTableModel {
-		private String[] columnNames = { "Expense Id", "Type", "Desc", "Amount",
+		private String[] columnNames = { "Asset Id", "Type", "Desc", "Amount",
 				"Date" };
 
 		Transactions trans = new Transactions();

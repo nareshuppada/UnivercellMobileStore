@@ -26,6 +26,7 @@ import com.univercellmobiles.app.ui.inventory.AccessorySearch;
 import com.univercellmobiles.app.ui.inventory.AddMobileAccessory;
 import com.univercellmobiles.app.ui.inventory.AddStock;
 import com.univercellmobiles.app.ui.inventory.BrandManager;
+import com.univercellmobiles.app.ui.inventory.InventoryManagement;
 import com.univercellmobiles.app.ui.inventory.ModelManager;
 import com.univercellmobiles.app.ui.inventory.StockSearch;
 import com.univercellmobiles.app.ui.reports.FirmValue;
@@ -163,7 +164,7 @@ public class MainFrontEnd {
 		JButton btnSearchPhones = new JButton("Search Phones");
 		btnSearchPhones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AccessorySearch frame = new AccessorySearch();
+				StockSearch frame = new StockSearch();
 				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				RefineryUtilities.centerFrameOnScreen(frame);
 				frame.setVisible(true);
@@ -171,22 +172,39 @@ public class MainFrontEnd {
 		});
 		
 		JButton btnSearchAccessories = new JButton("Search Accessories");
+		btnSearchAccessories.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AccessorySearch frame = new AccessorySearch();
+				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				RefineryUtilities.centerFrameOnScreen(frame);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnInventoryManagement = new JButton("Inventory Management");
+		btnInventoryManagement.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				InventoryManagement frame = new InventoryManagement();
+				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				RefineryUtilities.centerFrameOnScreen(frame);
+				frame.setVisible(true);
+			}
+		});
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
+			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(22)
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_panel.createSequentialGroup()
 									.addGap(31)
 									.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
 										.addComponent(btnPhoneSales, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(btnAccessoriesSales, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-									.addPreferredGap(ComponentPlacement.RELATED, 13, Short.MAX_VALUE))
+										.addComponent(btnAccessoriesSales, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
 								.addComponent(lblInventory, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(51)
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
 								.addComponent(btnAddPhoneStock, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -194,9 +212,10 @@ public class MainFrontEnd {
 								.addComponent(btnManageBrands, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(btnManageModels, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(btnSearchPhones, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(btnSearchAccessories, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+								.addComponent(btnSearchAccessories, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnInventoryManagement))))
 					.addGap(31))
-				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(16)
 					.addComponent(lblSales, GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
 					.addGap(15))
@@ -218,7 +237,9 @@ public class MainFrontEnd {
 					.addComponent(btnSearchPhones)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnSearchAccessories)
-					.addPreferredGap(ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnInventoryManagement)
+					.addPreferredGap(ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
 					.addComponent(lblSales, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnPhoneSales)

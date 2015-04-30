@@ -25,6 +25,8 @@ public class FundStatus {
 	private float fundsout;
 	private float deposits;
 	private Date today;
+	private float accStockValue;
+	private float accProfit;
 	public int getStatusId() {
 		return statusId;
 	}
@@ -102,6 +104,30 @@ public class FundStatus {
 	 */
 	public void setToday(Date today) {
 		this.today = today;
+	}
+	/**
+	 * @return the accStockValue
+	 */
+	public float getAccStockValue() {
+		return accStockValue;
+	}
+	/**
+	 * @param accStockValue the accStockValue to set
+	 */
+	public void setAccStockValue(float accStockValue) {
+		this.accStockValue = accStockValue;
+	}
+	/**
+	 * @return the accProfit
+	 */
+	public float getAccProfit() {
+		return accProfit;
+	}
+	/**
+	 * @param accProfit the accProfit to set
+	 */
+	public void setAccProfit(float accProfit) {
+		this.accProfit = accProfit;
 	}
 	
 	

@@ -42,6 +42,7 @@ import com.univercellmobiles.app.beans.FundStatus;
 import com.univercellmobiles.app.beans.PhoneModel;
 import com.univercellmobiles.app.beans.PhoneStock;
 import com.univercellmobiles.app.beans.Transactions;
+import com.univercellmobiles.app.service.AccessorySalesService;
 import com.univercellmobiles.app.service.AccessoryStockService;
 import com.univercellmobiles.app.service.BrandService;
 import com.univercellmobiles.app.service.FundStatusService;
@@ -70,6 +71,8 @@ public class BalanceSheet extends JFrame {
 	FundStatusService fs;
 	PhoneStockService pss;
 	TransactionService txs;
+	AccessoryStockService ass;
+	AccessorySalesService asaless;
 	SalesService ss;
 	private JTextField txtCash;
 	private JTextField txtUniFunds;
@@ -101,7 +104,7 @@ public class BalanceSheet extends JFrame {
 		setType(Type.POPUP);
 		setTitle("End of Day Funds");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(10, 10, 771, 825);
+		setBounds(10, 10, 1150, 780);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 
 		JPanel panel = new JPanel();
@@ -116,7 +119,8 @@ public class BalanceSheet extends JFrame {
 		txs = (TransactionService) context.getBean("transactionService");
 		pss = (PhoneStockService) context.getBean("phoneStockService");
 		ss =  (SalesService) context.getBean("salesService");
-		
+		ass= (AccessoryStockService)context.getBean("accessoryStockService");
+		asaless =(AccessorySalesService)context.getBean("accessorySalesService");
 
 		fm = new FundsModel();
 		table = new JTable();
@@ -124,7 +128,7 @@ public class BalanceSheet extends JFrame {
 		table.setBounds(67, 461, 627, -116);
 
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(67, 350, 625, 331);
+		scrollPane.setBounds(67, 350, 1022, 331);
 		panel.add(scrollPane);
 
 		JButton btnAddBalance = new JButton("Add Balance");
@@ -134,13 +138,15 @@ public class BalanceSheet extends JFrame {
 				f.setAssets(txs.getAssetsBalance());
 				f.setExpense(txs.getExpenseBalance());
 				f.setFundsout(txs.getInvestmentOut());
-				f.setInvestment(txs.getInvestmentBalance());
+				f.setInvestment(txs.getInvestmentBalance()+txs.getInvestmentOut());
 				f.setReturns(Float.parseFloat(txtReturns.getText().equals("")?"0":txtReturns.getText()));
 				f.setStockValue(pss.getCurrentStockValue());
 				f.setUnivercellfunds(Float.parseFloat(txtUniFunds.getText().equals("")?"0":txtUniFunds.getText()));
 				f.setProfit(ss.getAllProfit());
 			    f.setDeposits(Float.parseFloat(txtDeposits.getText().equals("")?"0":txtDeposits.getText()));
 			    f.setCash(Float.parseFloat(txtCash.getText().equals("")?"0":txtCash.getText()));
+			    f.setAccStockValue(ass.getCurrentStockValue());
+			    f.setAccProfit(asaless.getAllProfit());
 			    f.setToday(new Date());
 				fs.add(f);
 				fm.addRow(f);
@@ -247,8 +253,7 @@ public class BalanceSheet extends JFrame {
 
 
 	class FundsModel extends AbstractTableModel {
-		private String[] columnNames = { "Date", "Investment", "Expense", "Stock Value", "Profit","Assets","Cash","Univercell Funds","Returns","Funds Out","Deposits" };
-
+		private String[] columnNames = { "Date", "Investment", "Expense", "Phone Stock Value", "Phones Sale Profit","Assets","Cash","Univercell Funds","Returns","Investment WidthDrawn","Deposits","Acc Stock Value","Acc Sale Profit"};
 		FundStatus fund = new FundStatus();
 
 		private List<FundStatus> data = new ArrayList<FundStatus>();
@@ -300,6 +305,10 @@ public class BalanceSheet extends JFrame {
 				return f.getFundsout();
 			case 10:
 				return f.getDeposits();
+			case 11:
+				return f.getAccStockValue();
+			case 12:
+				return f.getAccProfit();
 			default:
 				throw new IndexOutOfBoundsException();
 			}
