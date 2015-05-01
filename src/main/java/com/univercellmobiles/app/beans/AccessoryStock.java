@@ -28,6 +28,9 @@ public class AccessoryStock {
 	private Float sp;
 	private int quantity;
 	private int available;
+	private String place;
+	private String invoiceNo;
+	private String distributor;
 	
 	
 	
@@ -207,6 +210,42 @@ public class AccessoryStock {
 	 */
 	public void setMarginAmount(Float marginAmount) {
 		this.marginAmount = marginAmount;
+	}
+	/**
+	 * @return the invoiceNo
+	 */
+	public String getInvoiceNo() {
+		return invoiceNo;
+	}
+	/**
+	 * @param invoiceNo the invoiceNo to set
+	 */
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = invoiceNo;
+	}
+	/**
+	 * @return the place
+	 */
+	public String getPlace() {
+		return place;
+	}
+	/**
+	 * @param place the place to set
+	 */
+	public void setPlace(String place) {
+		this.place = place;
+	}
+	/**
+	 * @return the distributor
+	 */
+	public String getDistributor() {
+		return distributor;
+	}
+	/**
+	 * @param distributor the distributor to set
+	 */
+	public void setDistributor(String distributor) {
+		this.distributor = distributor;
 	}
 	
 	

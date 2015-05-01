@@ -15,6 +15,7 @@ public class AccessorySales {
     @Id
 	private int saleId;
 	private Float salePrice;
+	private String accModel;
 	private Float dp;
 	private Float margin;
 	private Date salesDate;
@@ -244,6 +245,18 @@ public class AccessorySales {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	/**
+	 * @return the accModel
+	 */
+	public String getAccModel() {
+		return accModel;
+	}
+	/**
+	 * @param accModel the accModel to set
+	 */
+	public void setAccModel(String accModel) {
+		this.accModel = accModel;
 	}
 	
 	

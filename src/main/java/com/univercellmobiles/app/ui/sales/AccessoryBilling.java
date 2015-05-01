@@ -236,14 +236,19 @@ public class AccessoryBilling extends JFrame {
 						finalSP = Float.parseFloat(txtPrice.getText())
 								- Float.parseFloat(txtDiscount.getText());
 					sale.setSalePrice(finalSP);
+					sale.setDp(selectedStock.getDp());
+					sale.setAccModel(selectedStock.getAccModel());
 					sale.setStockId(selectedStock.getAccStockId());
-					sale.setPhoneModel(selectedStock.getAccModel());
+					sale.setPhoneModel(selectedStock.getPhmodelName());
 					sale.setSaleType(selectedStock.getAccType());
 					sale.setSalesDate(new Date());
 					sale.setQty(1);
 					sale.setVat(Float.parseFloat(txtVat.getText()));
 					sale.setCustContact(txtCustContact.getText());
+					sale.setInvoiceId(txtInvoiceId.getText());
+					sale.setOffer(txtAreaOffer.getText());
 					sale.setCustName(txtCustName.getText());
+					sale.setDescription(txtAreaDesc.getText());
 					float margin = finalSP - selectedStock.getDp()
 							+ selectedStock.getMargin()
 							* (selectedStock.getDp() / 100);

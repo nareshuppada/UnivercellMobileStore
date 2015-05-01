@@ -15,6 +15,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -52,6 +53,7 @@ import com.univercellmobiles.app.service.SalesService;
 import com.univercellmobiles.app.service.TransactionService;
 import com.univercellmobiles.app.ui.common.custom.AutocompleteJComboBox;
 import com.univercellmobiles.app.ui.common.custom.StringSearchable;
+import com.univercellmobiles.app.ui.reports.SendEmail;
 import com.univercellmobiles.app.util.ConfigBuilder;
 
 import javax.swing.JFormattedTextField;
@@ -78,6 +80,7 @@ public class BalanceSheet extends JFrame {
 	private JTextField txtUniFunds;
 	private JTextField txtReturns;
 	private JTextField txtDeposits;
+	private JTextField txtRecharges;
 
 	/**
 	 * Launch the application.
@@ -134,6 +137,14 @@ public class BalanceSheet extends JFrame {
 		JButton btnAddBalance = new JButton("Add Balance");
 		btnAddBalance.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(txtCash.getText().equals("")||txtUniFunds.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Fields can not be blank.", 
+                            "Blank Input",
+                            JOptionPane.WARNING_MESSAGE);
+					return;
+					
+				}
+				String htmlString = "<h1>PALASA UNIVERCELL FRANCHISEE Firm Value as on :"+new Date()+"</h1>";
 				FundStatus f = new FundStatus();
 				f.setAssets(txs.getAssetsBalance());
 				f.setExpense(txs.getExpenseBalance());
@@ -148,10 +159,52 @@ public class BalanceSheet extends JFrame {
 			    f.setAccStockValue(ass.getCurrentStockValue());
 			    f.setAccProfit(asaless.getTodaysProfit());
 			    f.setToday(new Date());
+			    f.setPhoneSale(ss.getTodaySale());
+			    f.setAccSale(asaless.getTodaySale());
+			    f.setRecharges(Float.parseFloat(txtRecharges.getText().equals("")?"0":txtRecharges.getText()));
+			    htmlString += "<br/>";
+			    htmlString += "<table>";
+			    htmlString += "<tr><td><b>Investment :</b></td><td>"+f.getInvestment()+"</td></tr>";
+			    htmlString += "<tr><td><b>Phone Stock Value :</b></td><td>"+f.getStockValue()+"</td></tr>";
+			    htmlString += "<tr><td><b>Acc. Stock Value :</b></td><td>"+f.getAccStockValue()+"</td></tr>";
+			    htmlString += "<tr><td><b>Cash :</b></td><td>"+f.getCash()+"</td></tr>";
+			    htmlString += "<tr><td><b>Cash in Bank :</b></td><td>"+f.getDeposits()+"</td></tr>";
+			    htmlString += "<tr><td><b>Univercell Funds :</b></td><td>"+f.getUnivercellfunds()+"</td></tr>";
+			    htmlString += "<tr><td><b>Fixed Assets :</b></td><td>"+f.getAssets()+"</td></tr>";
+			    htmlString += "<tr><td><b>Recharges :</b></td><td>"+f.getRecharges()+"</td></tr>";
+			    htmlString += "<tr><td><b>Today's Phone Sale :</b></td><td>"+f.getPhoneSale()+"</td></tr>";
+			    htmlString += "<tr><td><b>Today's Phone Sale Profit :</b></td><td>"+f.getProfit()+"</td></tr>";
+			    htmlString += "<tr><td><b>Today's Acc. Sale :</b></td><td>"+f.getAccSale()+"</td></tr>";
+			    htmlString += "<tr><td><b>Today's Acc. Sale Profit :</b></td><td>"+f.getAccProfit()+"</td></tr>";
+			    float todaysProfit = f.getAccProfit()+f.getProfit()+(f.getRecharges()*3/100);
+			    float todaysSale = f.getAccSale()+f.getPhoneSale();
+			    htmlString += "<tr><td><b>Today's Total Sale(Phone + Acc) :</b></td><td>"+todaysSale+"</td></tr>";
+			    htmlString += "<tr><td><b>Today's Total Profit(Phone + Acc + Recharges) :</b></td><td>"+todaysProfit+"</td></tr>";
+			    
+			    
+			   
+			    float currValue=f.getCash()+f.getAccStockValue()+f.getUnivercellfunds()+f.getDeposits()+f.getAssets();
+				
+				float growth = currValue-f.getInvestment();
+				
+				float ROI = (growth/f.getInvestment())*100;
+				
+				 htmlString += "<tr><td><b>Firm Current Value :</b></td><td>"+currValue+"</td></tr>";
+				 htmlString += "<tr><td><b>Growth :</b></td><td>"+growth+"</td></tr>";
+				 htmlString += "<tr><td><b>ROI :</b></td><td>"+ROI+"</td></tr>";
+				 htmlString += "</table>";
+				    
+				
 				fs.add(f);
 				fm.addRow(f);
 				fm.refreshTableData();
 				fm.fireTableDataChanged();
+				
+				SendEmail.sendHTMLasMail(htmlString);
+				txtReturns.setText("");
+				txtUniFunds.setText("");
+				txtDeposits.setText("");
+				txtCash.setText("");
 
 			}
 		});
@@ -178,11 +231,11 @@ public class BalanceSheet extends JFrame {
 		 table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		 
 		 JLabel lblDesc = new JLabel("Description");
-		 lblDesc.setBounds(64, 179, 187, 23);
+		 lblDesc.setBounds(67, 201, 187, 23);
 		 panel.add(lblDesc);
 		 
 		 textAreaDesc = new JTextArea();
-		 textAreaDesc.setBounds(291, 178, 401, 83);
+		 textAreaDesc.setBounds(291, 200, 401, 83);
 		 panel.add(textAreaDesc);
 		 
 		 JLabel lblCashInCounter = new JLabel("Cash in Counter");
@@ -221,6 +274,15 @@ public class BalanceSheet extends JFrame {
 		 panel.add(txtDeposits);
 		 txtDeposits.setColumns(10);
 		 
+		 JLabel lblRecharges = new JLabel("Recharges Amount");
+		 lblRecharges.setBounds(67, 157, 140, 14);
+		 panel.add(lblRecharges);
+		 
+		 txtRecharges = new JTextField();
+		 txtRecharges.setBounds(291, 154, 180, 20);
+		 panel.add(txtRecharges);
+		 txtRecharges.setColumns(10);
+		 
 
 	        
 	        //When selection changes, provide user with row numbers for
@@ -253,7 +315,7 @@ public class BalanceSheet extends JFrame {
 
 
 	class FundsModel extends AbstractTableModel {
-		private String[] columnNames = { "Date", "Investment", "Expense", "Phone Stock Value", "Phones Sale Profit","Assets","Cash","Univercell Funds","Returns","Investment WidthDrawn","Deposits","Acc Stock Value","Acc Sale Profit"};
+		private String[] columnNames = { "Date", "Investment", "Expense", "Phone Stock Value", "Phones Sale Profit","Assets","Cash","Univercell Funds","Returns","Investment WidthDrawn","Deposits","Acc Stock Value","Acc Sale Profit","Phone Sale","Acc. Sale","Recharges","Total Profit"};
 		FundStatus fund = new FundStatus();
 
 		private List<FundStatus> data = new ArrayList<FundStatus>();
@@ -309,6 +371,14 @@ public class BalanceSheet extends JFrame {
 				return f.getAccStockValue();
 			case 12:
 				return f.getAccProfit();
+			case 13:
+				return f.getPhoneSale();
+			case 14:
+				return f.getAccSale();
+			case 15:
+				return f.getRecharges();
+			case 16:
+				return f.getAccProfit()+f.getProfit()+f.getRecharges()*3/100;
 			default:
 				throw new IndexOutOfBoundsException();
 			}

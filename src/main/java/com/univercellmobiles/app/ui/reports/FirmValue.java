@@ -37,6 +37,7 @@ public class FirmValue extends JFrame {
 	JLabel lblUpdatedDate;
 	ConfigurableApplicationContext context = ConfigBuilder.getAppContext();
 	FundStatusService fs = (FundStatusService) context.getBean("fundStatusService");
+	private JTextField txtAccStockValue;
 
 	/**
 	 * Launch the application.
@@ -64,7 +65,7 @@ public class FirmValue extends JFrame {
 		setType(Type.POPUP);
 		setTitle("Firm Current Value");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 704, 451);
+		setBounds(100, 100, 704, 544);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -105,12 +106,12 @@ public class FirmValue extends JFrame {
 		txtStock.setColumns(10);
 		
 		JLabel lblFundsWithUnivercell = new JLabel("Funds with Univercell");
-		lblFundsWithUnivercell.setBounds(85, 143, 147, 24);
+		lblFundsWithUnivercell.setBounds(85, 212, 147, 24);
 		panel.add(lblFundsWithUnivercell);
 		
 		txtUniFunds = new JTextField();
 		txtUniFunds.setEditable(false);
-		txtUniFunds.setBounds(257, 145, 172, 20);
+		txtUniFunds.setBounds(257, 214, 172, 20);
 		panel.add(txtUniFunds);
 		txtUniFunds.setColumns(10);
 		
@@ -119,58 +120,58 @@ public class FirmValue extends JFrame {
 		panel.add(separator);
 		
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(33, 244, 594, 2);
+		separator_1.setBounds(33, 351, 594, 2);
 		panel.add(separator_1);
 		
 		JLabel lblBankDeposit = new JLabel("Bank Deposit");
-		lblBankDeposit.setBounds(85, 176, 147, 20);
+		lblBankDeposit.setBounds(85, 245, 147, 20);
 		panel.add(lblBankDeposit);
 		
 		txtBank = new JTextField();
 		txtBank.setEditable(false);
-		txtBank.setBounds(257, 176, 172, 20);
+		txtBank.setBounds(257, 245, 172, 20);
 		panel.add(txtBank);
 		txtBank.setColumns(10);
 		
 		JLabel lblTotal = new JLabel("Current Value");
-		lblTotal.setBounds(85, 273, 109, 24);
+		lblTotal.setBounds(85, 364, 109, 24);
 		panel.add(lblTotal);
 		
 		JLabel lblFixedAssets = new JLabel("Fixed Assets");
-		lblFixedAssets.setBounds(85, 209, 147, 24);
+		lblFixedAssets.setBounds(85, 278, 147, 24);
 		panel.add(lblFixedAssets);
 		
 		txtAssets = new JTextField();
 		txtAssets.setEditable(false);
-		txtAssets.setBounds(257, 213, 172, 20);
+		txtAssets.setBounds(257, 282, 172, 20);
 		panel.add(txtAssets);
 		txtAssets.setColumns(10);
 		
 		txtTotal = new JTextField();
-		txtTotal.setForeground(Color.GREEN);
+		txtTotal.setForeground(Color.RED);
 		txtTotal.setFont(new Font("Tahoma", Font.BOLD, 11));
 		txtTotal.setEditable(false);
-		txtTotal.setBounds(257, 275, 172, 20);
+		txtTotal.setBounds(257, 366, 172, 20);
 		panel.add(txtTotal);
 		txtTotal.setColumns(10);
 		
 		JLabel lblRoi = new JLabel("ROI");
-		lblRoi.setBounds(85, 338, 69, 24);
+		lblRoi.setBounds(85, 429, 69, 24);
 		panel.add(lblRoi);
 		
 		txtROI = new JTextField();
 		txtROI.setEditable(false);
-		txtROI.setBounds(257, 340, 172, 20);
+		txtROI.setBounds(257, 431, 172, 20);
 		panel.add(txtROI);
 		txtROI.setColumns(10);
 		
 		JLabel lblInvestment = new JLabel("Growth");
-		lblInvestment.setBounds(85, 308, 86, 20);
+		lblInvestment.setBounds(85, 399, 86, 20);
 		panel.add(lblInvestment);
 		
 		txtGrowth = new JTextField();
 		txtGrowth.setEditable(false);
-		txtGrowth.setBounds(257, 306, 172, 20);
+		txtGrowth.setBounds(257, 397, 172, 20);
 		panel.add(txtGrowth);
 		txtGrowth.setColumns(10);
 		
@@ -178,6 +179,13 @@ public class FirmValue extends JFrame {
 		lblUpdatedDate.setForeground(new Color(255, 0, 255));
 		lblUpdatedDate.setBounds(489, 101, 126, 20);
 		panel.add(lblUpdatedDate);
+		
+		txtAccStockValue = new JTextField();
+		txtAccStockValue.setText("0.0");
+		txtAccStockValue.setEditable(false);
+		txtAccStockValue.setColumns(10);
+		txtAccStockValue.setBounds(257, 141, 172, 20);
+		panel.add(txtAccStockValue);
 		
 		List<FundStatus> fundStatus = fs.getCurrentTxnDetails();
 		FundStatus currFundStatus = fundStatus.get(0);
@@ -189,18 +197,22 @@ public class FirmValue extends JFrame {
 		float bank =currFundStatus.getDeposits();
 		float assets =currFundStatus.getAssets();
 		
+		
 		txtInvestment.setText(Float.toString(investment));
 		txtCash.setText(Float.toString(cash));
 		txtStock.setText(Float.toString(stock));
 		txtUniFunds.setText(Float.toString(unifunds));
 		txtBank.setText(Float.toString(bank));
 		txtAssets.setText(Float.toString(assets));
+		
+		float accstock = currFundStatus.getAccStockValue();
+		txtAccStockValue.setText(Float.toString(accstock));
 		if(currFundStatus.getToday()!=null){
 		lblUpdatedDate.setText(currFundStatus.getToday().toString());
 		}
 		
 		
-		float currValue=cash+stock+unifunds+bank+assets;
+		float currValue=cash+stock+accstock+unifunds+bank+assets;
 		txtTotal.setText(Float.toString(currValue));
 		
 		float growth = currValue-investment;
@@ -215,6 +227,13 @@ public class FirmValue extends JFrame {
 		lblDetailsUpdatedAs.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblDetailsUpdatedAs.setBounds(489, 75, 126, 20);
 		panel.add(lblDetailsUpdatedAs);
+		
+		JLabel lblAccStockValue = new JLabel("Acc. Stock Value");
+		lblAccStockValue.setBounds(85, 143, 120, 14);
+		panel.add(lblAccStockValue);
+		
+		
+	
 		
 		
 		

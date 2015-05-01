@@ -225,7 +225,7 @@ public class AddMobileAccessory extends JFrame {
 				stock.setSp(Float.parseFloat(ftfSP.getText().replace(",", "")));
 				float margin =profit+ marginper*dp/100;
 				stock.setMarginAmount(margin);
-				totalCost += stock.getSp();
+				totalCost += stock.getSp()*stock.getQuantity();
 				accessoryService.add(stock);
 				lblCost.setText(totalCost.toString());
 				sm.addRow(stock);

@@ -27,6 +27,10 @@ public class FundStatus {
 	private Date today;
 	private float accStockValue;
 	private float accProfit;
+	private float phoneSale;//today
+	private float accSale;//today
+	private float recharges;
+	
 	public int getStatusId() {
 		return statusId;
 	}
@@ -128,6 +132,42 @@ public class FundStatus {
 	 */
 	public void setAccProfit(float accProfit) {
 		this.accProfit = accProfit;
+	}
+	/**
+	 * @return the phoneSale
+	 */
+	public float getPhoneSale() {
+		return phoneSale;
+	}
+	/**
+	 * @param phoneSale the phoneSale to set
+	 */
+	public void setPhoneSale(float phoneSale) {
+		this.phoneSale = phoneSale;
+	}
+	/**
+	 * @return the accSale
+	 */
+	public float getAccSale() {
+		return accSale;
+	}
+	/**
+	 * @param accSale the accSale to set
+	 */
+	public void setAccSale(float accSale) {
+		this.accSale = accSale;
+	}
+	/**
+	 * @return the recharges
+	 */
+	public float getRecharges() {
+		return recharges;
+	}
+	/**
+	 * @param recharges the recharges to set
+	 */
+	public void setRecharges(float recharges) {
+		this.recharges = recharges;
 	}
 	
 	
