@@ -135,7 +135,7 @@ public class ConfirmSale extends JFrame implements ActionListener {
 		
 		
 		txtBillingAmount = new JTextField();
-		txtBillingAmount.setForeground(Color.GREEN);
+		txtBillingAmount.setForeground(Color.BLUE);
 		txtBillingAmount.setFont(new Font("Tahoma", Font.BOLD, 13));
 		txtBillingAmount.setEditable(false);
 		txtBillingAmount.setBounds(138, 9, 116, 22);
