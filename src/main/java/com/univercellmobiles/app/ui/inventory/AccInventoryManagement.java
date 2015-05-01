@@ -94,7 +94,7 @@ public class AccInventoryManagement extends JFrame {
 	public AccInventoryManagement() {
 		setAlwaysOnTop(true);
 		setType(Type.POPUP);
-		setTitle("Inventory Management");
+		setTitle("Accessory Inventory Management");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 771, 707);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));

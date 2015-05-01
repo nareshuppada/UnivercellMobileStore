@@ -5,6 +5,7 @@ import java.util.Properties;
 
 import javax.mail.*;
 import javax.mail.internet.*;
+import javax.swing.JOptionPane;
 
 public class SendEmail {
 	
@@ -41,7 +42,12 @@ public class SendEmail {
 
 		   System.out.println("message sent successfully");
 		 
-		  } catch (MessagingException e) {throw new RuntimeException(e);}
+		  } catch (MessagingException e) {
+			  JOptionPane.showMessageDialog(null, "Error Sending Mail. Please Disable Firewall and Try.", 
+                      "Error Sending Mail",
+                      JOptionPane.WARNING_MESSAGE);
+				return;
+		  }
 		 
 		 }
 	

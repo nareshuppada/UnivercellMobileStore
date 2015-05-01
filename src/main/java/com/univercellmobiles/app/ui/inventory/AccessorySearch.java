@@ -98,7 +98,7 @@ public class AccessorySearch extends JFrame {
 	public AccessorySearch() {
 		setAlwaysOnTop(true);
 		setType(Type.POPUP);
-		setTitle("Accessroy Stock Search");
+		setTitle("Accessory Stock Search");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 771, 707);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));

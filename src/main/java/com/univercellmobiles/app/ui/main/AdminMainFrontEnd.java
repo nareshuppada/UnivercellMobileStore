@@ -289,6 +289,7 @@ public class AdminMainFrontEnd {
 		btnExpense.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ExpenseManagement frame = new ExpenseManagement();
+				RefineryUtilities.centerFrameOnScreen(frame);
 				frame.setVisible(true);
 			}
 		});
@@ -308,6 +309,7 @@ public class AdminMainFrontEnd {
 		btnManageEodCash.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BalanceSheet frame = new BalanceSheet();
+				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				RefineryUtilities.centerFrameOnScreen(frame);
 
 				frame.setVisible(true);

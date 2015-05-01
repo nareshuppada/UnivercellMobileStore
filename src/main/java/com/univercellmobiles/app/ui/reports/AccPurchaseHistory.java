@@ -104,7 +104,7 @@ public class AccPurchaseHistory extends JFrame {
 	 */
 	public AccPurchaseHistory() {
 		setType(Type.POPUP);
-		setTitle("Purchase History");
+		setTitle("Accessory Purchase History");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1000, 707);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));

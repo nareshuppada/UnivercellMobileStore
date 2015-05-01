@@ -111,7 +111,7 @@ public class AccSalesHistory extends JFrame {
 	public AccSalesHistory() {
 		setType(Type.POPUP);
 		setAlwaysOnTop(true);
-		setTitle("Sales History");
+		setTitle("Accessory Sales History");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1002, 707);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
