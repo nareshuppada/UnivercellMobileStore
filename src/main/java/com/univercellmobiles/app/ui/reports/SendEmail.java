@@ -11,7 +11,7 @@ public class SendEmail {
 	
 	public static void sendHTMLasMail(String htmlstr){
 		
-		String to="naresh.uppada@gmail.com";//change accordingly
+		String to="palasaunivercell@gmail.com";//change accordingly
 
 		//Get the session object
 		  Properties props = new Properties();
