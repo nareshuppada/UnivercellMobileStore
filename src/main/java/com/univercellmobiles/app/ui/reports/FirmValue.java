@@ -65,7 +65,7 @@ public class FirmValue extends JFrame {
 		setType(Type.POPUP);
 		setTitle("Firm Current Value");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 704, 544);
+		setBounds(100, 100, 770, 596);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -134,6 +134,7 @@ public class FirmValue extends JFrame {
 		txtBank.setColumns(10);
 		
 		JLabel lblTotal = new JLabel("Current Value");
+		lblTotal.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblTotal.setBounds(85, 364, 109, 24);
 		panel.add(lblTotal);
 		
@@ -149,29 +150,33 @@ public class FirmValue extends JFrame {
 		
 		txtTotal = new JTextField();
 		txtTotal.setForeground(Color.RED);
-		txtTotal.setFont(new Font("Tahoma", Font.BOLD, 11));
+		txtTotal.setFont(new Font("Tahoma", Font.BOLD, 20));
 		txtTotal.setEditable(false);
-		txtTotal.setBounds(257, 366, 172, 20);
+		txtTotal.setBounds(257, 362, 172, 31);
 		panel.add(txtTotal);
 		txtTotal.setColumns(10);
 		
 		JLabel lblRoi = new JLabel("ROI");
-		lblRoi.setBounds(85, 429, 69, 24);
+		lblRoi.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblRoi.setBounds(85, 467, 69, 24);
 		panel.add(lblRoi);
 		
 		txtROI = new JTextField();
+		txtROI.setFont(new Font("Tahoma", Font.BOLD, 20));
 		txtROI.setEditable(false);
-		txtROI.setBounds(257, 431, 172, 20);
+		txtROI.setBounds(257, 462, 172, 31);
 		panel.add(txtROI);
 		txtROI.setColumns(10);
 		
 		JLabel lblInvestment = new JLabel("Growth");
-		lblInvestment.setBounds(85, 399, 86, 20);
+		lblInvestment.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblInvestment.setBounds(86, 416, 86, 28);
 		panel.add(lblInvestment);
 		
 		txtGrowth = new JTextField();
+		txtGrowth.setFont(new Font("Tahoma", Font.BOLD, 20));
 		txtGrowth.setEditable(false);
-		txtGrowth.setBounds(257, 397, 172, 20);
+		txtGrowth.setBounds(257, 413, 172, 30);
 		panel.add(txtGrowth);
 		txtGrowth.setColumns(10);
 		

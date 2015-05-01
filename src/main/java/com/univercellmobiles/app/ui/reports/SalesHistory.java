@@ -139,33 +139,44 @@ public class SalesHistory extends JFrame {
 	    panel.add(toDatePicker);
 	    
 	    lblTotalPurchaseMade = new JLabel("Total Sales");
-		lblTotalPurchaseMade.setBounds(640, 313, 122, 22);
+	    lblTotalPurchaseMade.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblTotalPurchaseMade.setBounds(630, 312, 141, 22);
 		panel.add(lblTotalPurchaseMade);
 		
 		txtSales = new JTextField();
+		txtSales.setText("0");
+		txtSales.setForeground(Color.BLUE);
+		txtSales.setFont(new Font("Tahoma", Font.BOLD, 20));
 		txtSales.setEditable(false);
-		txtSales.setBounds(766, 314, 187, 20);
+		txtSales.setBounds(779, 307, 174, 28);
 		panel.add(txtSales);
 		txtSales.setColumns(10);
 		
 		lblIncentivesForThe = new JLabel("Total Profit");
-		lblIncentivesForThe.setBounds(640, 347, 94, 22);
+		lblIncentivesForThe.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblIncentivesForThe.setBounds(630, 346, 141, 22);
 		panel.add(lblIncentivesForThe);
 		
 		txtIncentives = new JTextField();
-		txtIncentives.setForeground(Color.GREEN);
+		txtIncentives.setText("0");
+		txtIncentives.setFont(new Font("Tahoma", Font.BOLD, 20));
+		txtIncentives.setForeground(Color.BLUE);
 		txtIncentives.setEditable(false);
-		txtIncentives.setBounds(766, 348, 187, 20);
+		txtIncentives.setBounds(779, 341, 174, 28);
 		panel.add(txtIncentives);
 		txtIncentives.setColumns(10);
 		
 		lblTotalPruchases = new JLabel("Total Pruchases");
-		lblTotalPruchases.setBounds(640, 387, 94, 22);
+		lblTotalPruchases.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblTotalPruchases.setBounds(630, 384, 141, 22);
 		panel.add(lblTotalPruchases);
 		
 		txtPurchases = new JTextField();
+		txtPurchases.setText("0");
+		txtPurchases.setForeground(Color.BLUE);
+		txtPurchases.setFont(new Font("Tahoma", Font.BOLD, 20));
 		txtPurchases.setEditable(false);
-		txtPurchases.setBounds(766, 388, 187, 20);
+		txtPurchases.setBounds(779, 379, 174, 28);
 		panel.add(txtPurchases);
 		txtPurchases.setColumns(10);
 		 final SalesTableModel  salesModel = new SalesTableModel();

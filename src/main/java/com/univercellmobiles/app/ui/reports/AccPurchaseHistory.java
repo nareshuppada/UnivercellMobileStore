@@ -132,23 +132,29 @@ public class AccPurchaseHistory extends JFrame {
 	    panel.add(toDatePicker);
 	    
 	    lblTotalPurchaseMade = new JLabel("Total Purchases");
-		lblTotalPurchaseMade.setBounds(647, 301, 122, 22);
+	    lblTotalPurchaseMade.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblTotalPurchaseMade.setBounds(637, 303, 126, 22);
 		panel.add(lblTotalPurchaseMade);
 		
 		txtPurchase = new JTextField();
+		txtPurchase.setFont(new Font("Tahoma", Font.BOLD, 20));
+		txtPurchase.setText("0");
 		txtPurchase.setEditable(false);
-		txtPurchase.setBounds(773, 302, 187, 20);
+		txtPurchase.setBounds(773, 302, 187, 28);
 		panel.add(txtPurchase);
 		txtPurchase.setColumns(10);
 		
 		lblIncentivesForThe = new JLabel("Incentives");
-		lblIncentivesForThe.setBounds(647, 335, 94, 22);
+		lblIncentivesForThe.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblIncentivesForThe.setBounds(637, 337, 126, 22);
 		panel.add(lblIncentivesForThe);
 		
 		txtIncentives = new JTextField();
+		txtIncentives.setFont(new Font("Tahoma", Font.BOLD, 20));
+		txtIncentives.setText("0");
 		txtIncentives.setForeground(Color.GREEN);
 		txtIncentives.setEditable(false);
-		txtIncentives.setBounds(773, 336, 187, 20);
+		txtIncentives.setBounds(773, 336, 187, 28);
 		panel.add(txtIncentives);
 		txtIncentives.setColumns(10);
 		 final StockTableModel  stockModel = new StockTableModel();

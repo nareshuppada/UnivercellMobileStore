@@ -136,15 +136,16 @@ public class ConfirmSale extends JFrame implements ActionListener {
 		
 		txtBillingAmount = new JTextField();
 		txtBillingAmount.setForeground(Color.BLUE);
-		txtBillingAmount.setFont(new Font("Tahoma", Font.BOLD, 13));
+		txtBillingAmount.setFont(new Font("Tahoma", Font.BOLD, 20));
 		txtBillingAmount.setEditable(false);
-		txtBillingAmount.setBounds(138, 9, 116, 22);
+		txtBillingAmount.setBounds(198, 9, 116, 34);
 		txtBillingAmount.setText(Float.toString(billAmount));
 		panel.add(txtBillingAmount);
 		txtBillingAmount.setColumns(10);
 		
 		JLabel lblBillingAmount = new JLabel("Billing Amount");
-		lblBillingAmount.setBounds(41, 14, 66, 14);
+		lblBillingAmount.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblBillingAmount.setBounds(42, 10, 153, 34);
 		panel.add(lblBillingAmount);
 		
 		lblCashRecieved = new JLabel("Cash Recieved");
@@ -182,13 +183,14 @@ public class ConfirmSale extends JFrame implements ActionListener {
 		
 		
 		lblReturnAmount = new JLabel("Return Amount");
-		lblReturnAmount.setBounds(41, 164, 86, 14);
+		lblReturnAmount.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblReturnAmount.setBounds(41, 164, 144, 23);
 		panel.add(lblReturnAmount);
 		
 		lblBalance = new JLabel("Rs. 0.0");
 		lblBalance.setForeground(Color.RED);
-		lblBalance.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblBalance.setBounds(138, 159, 126, 23);
+		lblBalance.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblBalance.setBounds(195, 153, 119, 41);
 		panel.add(lblBalance);
 		
 		txtCardNumber = new JTextField();

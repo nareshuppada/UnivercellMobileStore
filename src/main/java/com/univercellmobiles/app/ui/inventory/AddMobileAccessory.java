@@ -238,13 +238,14 @@ public class AddMobileAccessory extends JFrame {
 		panel.add(btnAddStock);
 
 		JLabel lblTotalCost = new JLabel("Total Stock Added Cost : ");
-		lblTotalCost.setBounds(332, 636, 187, 22);
+		lblTotalCost.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblTotalCost.setBounds(320, 636, 199, 22);
 		panel.add(lblTotalCost);
 
 		lblCost = new JLabel("0");
-		lblCost.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblCost.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblCost.setForeground(Color.GREEN);
-		lblCost.setBounds(561, 638, 133, 18);
+		lblCost.setBounds(559, 631, 133, 28);
 		panel.add(lblCost);
 
 		JScrollPane scrollPane = new JScrollPane();

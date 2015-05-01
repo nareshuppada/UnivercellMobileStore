@@ -106,7 +106,7 @@ public class AddStock extends JFrame {
 	        percentFormat.setMaximumFractionDigits(2);
 	        moneyFormat = NumberFormat.getInstance();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(10, 10, 999, 780);
+		setBounds(10, 10, 1093, 780);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 
 		JPanel panel = new JPanel();
@@ -202,8 +202,8 @@ public class AddStock extends JFrame {
 		
 		   lblSPCost = new JLabel("0");
 		    lblSPCost.setForeground(Color.GREEN);
-		    lblSPCost.setFont(new Font("Tahoma", Font.BOLD, 11));
-		    lblSPCost.setBounds(873, 633, 79, 18);
+		    lblSPCost.setFont(new Font("Tahoma", Font.BOLD, 20));
+		    lblSPCost.setBounds(905, 619, 102, 28);
 		    panel.add(lblSPCost);
 
 		JButton btnAddStock = new JButton("Add Stock");
@@ -276,14 +276,14 @@ public class AddStock extends JFrame {
 		panel.add(btnAddStock);
 
 		JLabel lblTotalCost = new JLabel("Total Purchases : ");
-		lblTotalCost.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblTotalCost.setBounds(721, 598, 128, 22);
+		lblTotalCost.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblTotalCost.setBounds(721, 590, 163, 25);
 		panel.add(lblTotalCost);
 
 		lblCost = new JLabel("0");
-		lblCost.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblCost.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblCost.setForeground(Color.GREEN);
-		lblCost.setBounds(873, 600, 79, 18);
+		lblCost.setBounds(905, 586, 79, 28);
 		panel.add(lblCost);
 
 		JLabel lblDealerPricedp = new JLabel("Dealer Price (DP)");
@@ -346,8 +346,8 @@ public class AddStock extends JFrame {
 		    panel.add(comboBox);
 		    
 		    JLabel lblTotalPurchaseSp = new JLabel("Total Purchase SP :");
-		    lblTotalPurchaseSp.setFont(new Font("Tahoma", Font.BOLD, 11));
-		    lblTotalPurchaseSp.setBounds(721, 631, 128, 22);
+		    lblTotalPurchaseSp.setFont(new Font("Tahoma", Font.BOLD, 15));
+		    lblTotalPurchaseSp.setBounds(721, 623, 174, 25);
 		    panel.add(lblTotalPurchaseSp);
 		    
 		 

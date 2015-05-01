@@ -20,5 +20,6 @@ public interface TransactionService {
 	public float getExpenseBalance();
 	public float getInvestmentOut();
 	public float getInvestmentBalance();
+	public float getTodaysExpense();
 
 }

@@ -109,7 +109,7 @@ public class AccessoryBilling extends JFrame {
 		// setAlwaysOnTop(true);
 		setType(Type.POPUP);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 855, 707);
+		setBounds(100, 100, 855, 730);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 
 		JPanel panel = new JPanel();
@@ -269,7 +269,7 @@ public class AccessoryBilling extends JFrame {
 
 			}
 		});
-		btnAddStock.setBounds(415, 381, 133, 23);
+		btnAddStock.setBounds(559, 381, 133, 23);
 		panel.add(btnAddStock);
 
 		/*
@@ -285,7 +285,8 @@ public class AccessoryBilling extends JFrame {
 		 */
 
 		JLabel lblTotalCost = new JLabel("Grand Total : ");
-		lblTotalCost.setBounds(389, 611, 128, 22);
+		lblTotalCost.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblTotalCost.setBounds(390, 620, 128, 37);
 		panel.add(lblTotalCost);
 
 		JButton btnConfirmSale = new JButton("Confirm Sale");
@@ -304,19 +305,17 @@ public class AccessoryBilling extends JFrame {
 
 			}
 		});
-		btnConfirmSale.setBounds(67, 611, 128, 23);
+		btnConfirmSale.setBounds(67, 629, 128, 23);
 		panel.add(btnConfirmSale);
 
 		txtGrandTotal = new JTextField();
+		txtGrandTotal.setForeground(Color.BLUE);
+		txtGrandTotal.setFont(new Font("Tahoma", Font.BOLD, 20));
 		txtGrandTotal.setText("0");
 		txtGrandTotal.setEditable(false);
-		txtGrandTotal.setBounds(530, 612, 162, 20);
+		txtGrandTotal.setBounds(530, 620, 162, 36);
 		panel.add(txtGrandTotal);
 		txtGrandTotal.setColumns(10);
-
-		JButton btnDeleteSale = new JButton("Delete Selected");
-		btnDeleteSale.setBounds(559, 381, 133, 23);
-		panel.add(btnDeleteSale);
 
 		JLabel lblCustomerName = new JLabel("Customer Name");
 		lblCustomerName.setBounds(67, 217, 107, 20);

@@ -107,7 +107,7 @@ public class BalanceSheet extends JFrame {
 		setType(Type.POPUP);
 		setTitle("End of Day Funds");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(10, 10, 1150, 780);
+		setBounds(10, 10, 1334, 780);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 
 		JPanel panel = new JPanel();
@@ -131,7 +131,7 @@ public class BalanceSheet extends JFrame {
 		table.setBounds(67, 461, 627, -116);
 
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(67, 350, 1022, 331);
+		scrollPane.setBounds(67, 350, 1198, 331);
 		panel.add(scrollPane);
 
 		JButton btnAddBalance = new JButton("Add Balance");
@@ -147,7 +147,7 @@ public class BalanceSheet extends JFrame {
 				String htmlString = "<h1>PALASA UNIVERCELL FRANCHISEE Firm Value as on :"+new Date()+"</h1>";
 				FundStatus f = new FundStatus();
 				f.setAssets(txs.getAssetsBalance());
-				f.setExpense(txs.getExpenseBalance());
+				f.setExpense(txs.getTodaysExpense());
 				f.setFundsout(txs.getInvestmentOut());
 				f.setInvestment(txs.getInvestmentBalance()+txs.getInvestmentOut());
 				f.setReturns(Float.parseFloat(txtReturns.getText().equals("")?"0":txtReturns.getText()));
@@ -178,8 +178,13 @@ public class BalanceSheet extends JFrame {
 			    htmlString += "<tr><td><b>Today's Acc. Sale Profit :</b></td><td>"+f.getAccProfit()+"</td></tr>";
 			    float todaysProfit = f.getAccProfit()+f.getProfit()+(f.getRecharges()*3/100);
 			    float todaysSale = f.getAccSale()+f.getPhoneSale();
+			    float todaysExpense = f.getExpense();
+			    float effProfit = todaysProfit-todaysExpense;
 			    htmlString += "<tr><td><b>Today's Total Sale(Phone + Acc) :</b></td><td>"+todaysSale+"</td></tr>";
 			    htmlString += "<tr><td><b>Today's Total Profit(Phone + Acc + Recharges) :</b></td><td>"+todaysProfit+"</td></tr>";
+			    htmlString += "<tr><td><b>Today's Expense :</b></td><td>"+todaysExpense+"</td></tr>";
+			    htmlString += "<tr><td><b>Today's Effective Profit :</b></td><td>"+effProfit+"</td></tr>";
+			    
 			    
 			    
 			   
@@ -223,7 +228,7 @@ public class BalanceSheet extends JFrame {
 				}
 			}
 		});
-		btnDeleteBrand.setBounds(552, 707, 140, 23);
+		btnDeleteBrand.setBounds(1125, 707, 140, 23);
 		panel.add(btnDeleteBrand);
 		
 			//model.setDate(today.getYear(),today.getDate(),today.getDate());

@@ -139,33 +139,42 @@ public class AccSalesHistory extends JFrame {
 	    panel.add(toDatePicker);
 	    
 	    lblTotalPurchaseMade = new JLabel("Total Sales");
-		lblTotalPurchaseMade.setBounds(640, 313, 122, 22);
+	    lblTotalPurchaseMade.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblTotalPurchaseMade.setBounds(634, 313, 128, 22);
 		panel.add(lblTotalPurchaseMade);
 		
 		txtSales = new JTextField();
+		txtSales.setFont(new Font("Tahoma", Font.BOLD, 20));
+		txtSales.setText("0");
 		txtSales.setEditable(false);
-		txtSales.setBounds(766, 314, 187, 20);
+		txtSales.setBounds(766, 308, 187, 28);
 		panel.add(txtSales);
 		txtSales.setColumns(10);
 		
 		lblIncentivesForThe = new JLabel("Total Profit");
-		lblIncentivesForThe.setBounds(640, 347, 94, 22);
+		lblIncentivesForThe.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblIncentivesForThe.setBounds(634, 347, 128, 22);
 		panel.add(lblIncentivesForThe);
 		
 		txtIncentives = new JTextField();
+		txtIncentives.setFont(new Font("Tahoma", Font.BOLD, 20));
+		txtIncentives.setText("0");
 		txtIncentives.setForeground(Color.GREEN);
 		txtIncentives.setEditable(false);
-		txtIncentives.setBounds(766, 348, 187, 20);
+		txtIncentives.setBounds(766, 342, 187, 28);
 		panel.add(txtIncentives);
 		txtIncentives.setColumns(10);
 		
 		lblTotalPruchases = new JLabel("Total Pruchases");
-		lblTotalPruchases.setBounds(640, 387, 94, 22);
+		lblTotalPruchases.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblTotalPruchases.setBounds(634, 387, 128, 22);
 		panel.add(lblTotalPruchases);
 		
 		txtPurchases = new JTextField();
+		txtPurchases.setFont(new Font("Tahoma", Font.BOLD, 20));
+		txtPurchases.setText("0");
 		txtPurchases.setEditable(false);
-		txtPurchases.setBounds(766, 388, 187, 20);
+		txtPurchases.setBounds(766, 382, 187, 28);
 		panel.add(txtPurchases);
 		txtPurchases.setColumns(10);
 		 final SalesTableModel  salesModel = new SalesTableModel();
