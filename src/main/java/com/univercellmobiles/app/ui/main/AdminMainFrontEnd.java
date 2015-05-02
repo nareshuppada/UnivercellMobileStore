@@ -38,6 +38,7 @@ import com.univercellmobiles.app.ui.reports.PurchaseHistory;
 import com.univercellmobiles.app.ui.reports.SalesHistory;
 import com.univercellmobiles.app.ui.sales.AccessoryBilling;
 import com.univercellmobiles.app.ui.sales.SalesBilling;
+import com.univercellmobiles.app.ui.sales.StockReturns;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -205,6 +206,16 @@ public class AdminMainFrontEnd {
 				frame.setVisible(true);
 			}
 		});
+		
+		JButton btnReturnStock = new JButton("Return Stock");
+		btnReturnStock.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				StockReturns frame = new StockReturns();
+				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				RefineryUtilities.centerFrameOnScreen(frame);
+				frame.setVisible(true);
+			}
+		});
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -219,6 +230,7 @@ public class AdminMainFrontEnd {
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(51)
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(btnReturnStock, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(btnAddPhoneStock, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(btnAddAccessories, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(btnManageBrands, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -251,7 +263,9 @@ public class AdminMainFrontEnd {
 					.addComponent(btnInventoryManagement)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnAccInventoryManagement)
-					.addPreferredGap(ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnReturnStock)
+					.addPreferredGap(ComponentPlacement.RELATED, 287, Short.MAX_VALUE)
 					.addComponent(lblSales, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnPhoneSales)
@@ -417,7 +431,6 @@ public class AdminMainFrontEnd {
 								.addComponent(btnInvestment, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
 								.addComponent(btnAssets, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(btnManageEodCash, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblReports, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnPurchaseHistory, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
 								.addComponent(btnSalesHistory, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(btnFirmValue, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -425,7 +438,8 @@ public class AdminMainFrontEnd {
 								.addComponent(lblDate, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(btnFirmValueGraph, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(btnAccPurchaseHistory, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(btnAccSalesHistory, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+								.addComponent(btnAccSalesHistory, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblReports, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
 						.addGroup(gl_panel_2.createSequentialGroup()
 							.addGap(32)
 							.addComponent(lblFundsManagement, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)))
@@ -458,7 +472,7 @@ public class AdminMainFrontEnd {
 					.addComponent(btnFirmValue)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnFirmValueGraph)
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 236, Short.MAX_VALUE)
 					.addComponent(lblTime)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblDate)

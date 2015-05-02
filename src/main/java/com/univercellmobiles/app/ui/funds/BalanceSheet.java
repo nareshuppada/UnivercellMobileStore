@@ -49,6 +49,7 @@ import com.univercellmobiles.app.service.BrandService;
 import com.univercellmobiles.app.service.FundStatusService;
 import com.univercellmobiles.app.service.PhoneModelService;
 import com.univercellmobiles.app.service.PhoneStockService;
+import com.univercellmobiles.app.service.ReturnsService;
 import com.univercellmobiles.app.service.SalesService;
 import com.univercellmobiles.app.service.TransactionService;
 import com.univercellmobiles.app.ui.common.custom.AutocompleteJComboBox;
@@ -75,6 +76,7 @@ public class BalanceSheet extends JFrame {
 	TransactionService txs;
 	AccessoryStockService ass;
 	AccessorySalesService asaless;
+	ReturnsService rs;
 	SalesService ss;
 	private JTextField txtCash;
 	private JTextField txtUniFunds;
@@ -103,7 +105,6 @@ public class BalanceSheet extends JFrame {
 	 * Create the frame.
 	 */
 	public BalanceSheet() {
-		setAlwaysOnTop(true);
 		setType(Type.POPUP);
 		setTitle("End of Day Funds");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -124,6 +125,8 @@ public class BalanceSheet extends JFrame {
 		ss =  (SalesService) context.getBean("salesService");
 		ass= (AccessoryStockService)context.getBean("accessoryStockService");
 		asaless =(AccessorySalesService)context.getBean("accessorySalesService");
+		rs = (ReturnsService)context.getBean("returnService");
+		
 
 		fm = new FundsModel();
 		table = new JTable();
@@ -170,6 +173,7 @@ public class BalanceSheet extends JFrame {
 			    htmlString += "<tr><td><b>Cash :</b></td><td>"+f.getCash()+"</td></tr>";
 			    htmlString += "<tr><td><b>Cash in Bank :</b></td><td>"+f.getDeposits()+"</td></tr>";
 			    htmlString += "<tr><td><b>Univercell Funds :</b></td><td>"+f.getUnivercellfunds()+"</td></tr>";
+			    htmlString += "<tr><td><b>Stock Returns :</b></td><td>"+f.getReturns()+"</td></tr>";
 			    htmlString += "<tr><td><b>Fixed Assets :</b></td><td>"+f.getAssets()+"</td></tr>";
 			    htmlString += "<tr><td><b>Recharges :</b></td><td>"+f.getRecharges()+"</td></tr>";
 			    htmlString += "<tr><td><b>Today's Phone Sale :</b></td><td>"+f.getPhoneSale()+"</td></tr>";
@@ -188,7 +192,7 @@ public class BalanceSheet extends JFrame {
 			    
 			    
 			   
-			    float currValue=f.getCash()+f.getAccStockValue()+f.getUnivercellfunds()+f.getDeposits()+f.getAssets();
+			    float currValue=f.getCash()+f.getAccStockValue()+f.getUnivercellfunds()+f.getReturns()+f.getDeposits()+f.getAssets();
 				
 				float growth = currValue-f.getInvestment();
 				
@@ -266,9 +270,13 @@ public class BalanceSheet extends JFrame {
 		 panel.add(lblReturns);
 		 
 		 txtReturns = new JTextField();
+		 txtReturns.setText("0");
+		 txtReturns.setForeground(Color.RED);
+		 txtReturns.setEditable(false);
 		 txtReturns.setBounds(291, 91, 180, 20);
 		 panel.add(txtReturns);
 		 txtReturns.setColumns(10);
+		 txtReturns.setText(Float.toString(rs.getAllReturnsAmount()));
 		 
 		 JLabel lblBankDeposits = new JLabel("Bank Deposits");
 		 lblBankDeposits.setBounds(67, 123, 140, 23);
@@ -287,6 +295,7 @@ public class BalanceSheet extends JFrame {
 		 txtRecharges.setBounds(291, 154, 180, 20);
 		 panel.add(txtRecharges);
 		 txtRecharges.setColumns(10);
+		 txtRecharges.setText("0");
 		 
 
 	        

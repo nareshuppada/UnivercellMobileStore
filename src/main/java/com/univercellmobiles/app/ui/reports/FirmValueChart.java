@@ -27,7 +27,7 @@ import org.jfree.ui.RefineryUtilities;
  * A simple demonstration application showing how to create a bar chart.
  *
  */
-public class FirmValueChart extends ApplicationFrame {
+public class FirmValueChart extends JFrame {
 
     /**
      * Creates a new demo instance.

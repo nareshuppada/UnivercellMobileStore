@@ -48,6 +48,9 @@ public class SendEmail {
                       JOptionPane.WARNING_MESSAGE);
 				return;
 		  }
+		  JOptionPane.showMessageDialog(null, "Status Report sent to palasaunivercell@gmail.com.", 
+                  "Email Success",
+                  JOptionPane.WARNING_MESSAGE);
 		 
 		 }
 	
