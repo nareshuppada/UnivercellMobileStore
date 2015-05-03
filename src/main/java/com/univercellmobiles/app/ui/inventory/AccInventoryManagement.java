@@ -119,7 +119,7 @@ public class AccInventoryManagement extends JFrame {
                 });
         filterText.setBounds(279, 10, 415, 22);
         panel.add(filterText);*/
-		JLabel lblModel = new JLabel("Phone Model");
+		JLabel lblModel = new JLabel("Search By Accessory Name");
 		lblModel.setBounds(67, 38, 153, 22);
 		panel.add(lblModel);
 		
@@ -317,7 +317,7 @@ public class AccInventoryManagement extends JFrame {
         private String[] columnNames = {"Stock Id",
                                         "Model","Phone Model",
                                         "Selling Price",
-                                        "DP"
+                                        "DP","Qty"
                                         };
         
        
@@ -366,6 +366,8 @@ public class AccInventoryManagement extends JFrame {
             	 	return ps.getSp();
              case 4:
          	 	return ps.getDp();
+             case 5:
+            	 return ps.getQuantity();
            
              default:
                     throw new IndexOutOfBoundsException();
