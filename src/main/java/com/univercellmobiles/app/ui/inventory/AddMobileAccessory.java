@@ -131,7 +131,7 @@ public class AddMobileAccessory extends JFrame {
 
 		modelsList = pms.getAllModelNames();
 		accNameList = accessoryService.getAllAccNames();
-		System.out.println("modelsList" + modelsList.toString());
+	//	System.out.println("modelsList" + modelsList.toString());
 
 		StringSearchable searchablePhoneModel = new StringSearchable(modelsList);
 
@@ -308,12 +308,23 @@ public class AddMobileAccessory extends JFrame {
 		panel.add(lblAccessoryType);
 
 		List<String> accType = new ArrayList<String>();
-		accType.add("Tamper Glass");
 		accType.add("Ear Phones");
-		accType.add("Head Phones");
-		accType.add("Flip Cover");
-		accType.add("Back Pouch");
-		accType.add("Tab Cover");
+		accType.add("Data cable");
+		accType.add("Bluetooth & Headset");
+	accType.add("Bluetooth Speakers");
+	accType.add("FlipCover");
+	accType.add("Tab Covers");
+	accType.add("Adaptor & Chargers");
+	accType.add("Multi Data Cable");
+	accType.add("Back Pouch (Photo Case)");
+	accType.add("Back Pouch(Rajasthani Print)");
+	accType.add("Back Pouch (Silicon)");
+	accType.add("Tampered Glass");
+	accType.add("Screen Guard(Clear)");
+	accType.add("Screen Guard(Matt)");
+	accType.add("Screen Guard(Ultra Clear)");
+	accType.add("Spike");
+	accType.add("Mirco Card Reader");
 
 		comboAccType = new JComboBox();
 		comboAccType.setBounds(279, 79, 415, 20);

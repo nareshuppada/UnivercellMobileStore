@@ -67,6 +67,8 @@ public class AccessoryBilling extends JFrame {
 
 	private Float totalCost = (float) 0.0;
 	AutocompleteJComboBox comboModelSearch;
+	AutocompleteJComboBox accNameSearchCombo;
+	JComboBox comboAccType;
 	ConfigurableApplicationContext context = ConfigBuilder.getAppContext();
 
 	AccessoryStockService as = (AccessoryStockService) context
@@ -125,8 +127,71 @@ public class AccessoryBilling extends JFrame {
 		 * removeUpdate(DocumentEvent e) { newFilter(); } });
 		 * filterText.setBounds(279, 10, 415, 22); panel.add(filterText);
 		 */
-		JLabel lblModel = new JLabel("Accessory Name");
-		lblModel.setBounds(67, 38, 153, 22);
+		List<String> accType = new ArrayList<String>();
+		
+		/*
+		 * Power Bank
+Ear Phones
+Data cable
+Bluetooth & Headset
+Bluetooth
+FlipCover
+Tab Covers
+Adaptor
+Multi Data Cable
+Back Pouch (Photo Case)
+Back Pouch(Rajasthani Print)
+Back Pouch(Slicion)
+Back Pouch (Silicon)
+Back Pouch(Silicon)
+Tampered Glass
+Screen Guard(Clear)
+Screen Guard(Matt)
+Screen Guard(Ultra Clear)
+Spike
+Mirco Card Reader
+SD Card
+
+		 */
+
+		accType.add("Ear Phones");
+		accType.add("Data cable");
+		accType.add("Bluetooth & Headset");
+	accType.add("Bluetooth Speakers");
+	accType.add("FlipCover");
+	accType.add("Tab Covers");
+	accType.add("Adaptor & Chargers");
+	accType.add("Multi Data Cable");
+	accType.add("Back Pouch (Photo Case)");
+	accType.add("Back Pouch(Rajasthani Print)");
+	accType.add("Back Pouch (Silicon)");
+	accType.add("Tampered Glass");
+	accType.add("Screen Guard(Clear)");
+	accType.add("Screen Guard(Matt)");
+	accType.add("Screen Guard(Ultra Clear)");
+	accType.add("Spike");
+	accType.add("Mirco Card Reader");
+
+		comboAccType = new JComboBox();
+		comboAccType.setBounds(279, 11, 415, 20);
+		for (String type : accType) {
+			comboAccType.addItem(type);
+		
+		}
+		
+		comboAccType.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				newTypeFilter();
+			}
+			
+		});
+		panel.add(comboAccType);
+		
+		JLabel lblModel = new JLabel("Phone Model");
+		lblModel.setBounds(70, 42, 153, 22);
 		panel.add(lblModel);
 
 		List<String> modelsList = new ArrayList<String>();
@@ -136,17 +201,28 @@ public class AccessoryBilling extends JFrame {
 		// Need to filter by Accessory Stock first
 		// Next by Accessory Name
 
-		modelsList = pms.getAllModelNames();
+		
+		List<String> accNameList = new ArrayList<String>();
 
+		
+		modelsList = pms.getAllModelNames();
+		accNameList = as.getAllAccNames();
 		StringSearchable searchable = new StringSearchable(modelsList);
 
 		comboModelSearch = new AutocompleteJComboBox(searchable);
 		final StockTableModel stockModel = new StockTableModel();
 		sorter = new TableRowSorter<StockTableModel>(stockModel);
+		
+		
+		
+		StringSearchable searchableAccModel = new StringSearchable(accNameList);
+
+
+		
 
 		// Create the scroll pane and add the table to it.
 		JScrollPane stockScrollPane = new JScrollPane();
-		stockScrollPane.setBounds(67, 71, 625, 87);
+		stockScrollPane.setBounds(69, 108, 625, 87);
 		// Add the scroll pane to this panel.
 		panel.add(stockScrollPane);
 		tableStock = new JTable(stockModel);
@@ -180,25 +256,29 @@ public class AccessoryBilling extends JFrame {
 				});
 
 		comboModelSearch.addItemListener(new MyItemListener());
+		accNameSearchCombo = new AutocompleteJComboBox(searchableAccModel);
+		accNameSearchCombo.addItemListener(new MyItemAccNameListener());
+		accNameSearchCombo.setBounds(279, 75, 415, 22);
+		panel.add(accNameSearchCombo);
 
-		comboModelSearch.setBounds(279, 38, 415, 22);
+		comboModelSearch.setBounds(279, 42, 415, 22);
 		panel.add(comboModelSearch);
 
 		JLabel lblPrice = new JLabel("Selling Price");
-		lblPrice.setBounds(67, 183, 128, 22);
+		lblPrice.setBounds(69, 259, 128, 22);
 		panel.add(lblPrice);
 
 		txtPrice = new JTextField();
-		txtPrice.setBounds(177, 184, 171, 20);
+		txtPrice.setBounds(179, 260, 171, 20);
 		panel.add(txtPrice);
 		txtPrice.setColumns(10);
 
 		JLabel lblOffer = new JLabel("Offer Details");
-		lblOffer.setBounds(67, 282, 153, 22);
+		lblOffer.setBounds(70, 355, 153, 22);
 		panel.add(lblOffer);
 
 		JLabel lblDescription = new JLabel("Description");
-		lblDescription.setBounds(69, 328, 153, 22);
+		lblDescription.setBounds(72, 401, 153, 22);
 		panel.add(lblDescription);
 
 		im = new InvoiceTableModel();
@@ -207,7 +287,7 @@ public class AccessoryBilling extends JFrame {
 		table.setBounds(67, 461, 627, -116);
 
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(67, 415, 625, 185);
+		scrollPane.setBounds(67, 499, 625, 101);
 		panel.add(scrollPane);
 
 		JButton btnAddStock = new JButton("Add to Sale");
@@ -269,7 +349,7 @@ public class AccessoryBilling extends JFrame {
 
 			}
 		});
-		btnAddStock.setBounds(559, 381, 133, 23);
+		btnAddStock.setBounds(561, 465, 133, 23);
 		panel.add(btnAddStock);
 
 		/*
@@ -318,68 +398,86 @@ public class AccessoryBilling extends JFrame {
 		txtGrandTotal.setColumns(10);
 
 		JLabel lblCustomerName = new JLabel("Customer Name");
-		lblCustomerName.setBounds(67, 217, 107, 20);
+		lblCustomerName.setBounds(69, 293, 107, 20);
 		panel.add(lblCustomerName);
 
 		txtCustName = new JTextField();
-		txtCustName.setBounds(177, 216, 171, 22);
+		txtCustName.setBounds(179, 292, 171, 22);
 		panel.add(txtCustName);
 		txtCustName.setColumns(10);
 
 		JLabel lblCustomerContact = new JLabel("Customer Contact");
-		lblCustomerContact.setBounds(379, 216, 107, 22);
+		lblCustomerContact.setBounds(381, 292, 107, 22);
 		panel.add(lblCustomerContact);
 
 		txtCustContact = new JTextField();
-		txtCustContact.setBounds(521, 216, 171, 21);
+		txtCustContact.setBounds(523, 292, 171, 21);
 		panel.add(txtCustContact);
 		txtCustContact.setColumns(10);
 
 		JLabel lblInvoiceNo = new JLabel("Invoice No");
-		lblInvoiceNo.setBounds(67, 11, 153, 22);
+		lblInvoiceNo.setBounds(70, 220, 153, 22);
 		panel.add(lblInvoiceNo);
 
 		txtInvoiceId = new JTextField();
-		txtInvoiceId.setBounds(279, 12, 413, 20);
+		txtInvoiceId.setBounds(179, 221, 171, 20);
 		panel.add(txtInvoiceId);
 		txtInvoiceId.setColumns(10);
 
 		JLabel lblVatt = new JLabel("VAT");
-		lblVatt.setBounds(67, 249, 82, 18);
+		lblVatt.setBounds(69, 325, 82, 18);
 		panel.add(lblVatt);
 
 		txtVat = new JTextField();
 		txtVat.setText("5.0");
-		txtVat.setBounds(177, 248, 171, 20);
+		txtVat.setBounds(179, 324, 171, 20);
 		panel.add(txtVat);
 		txtVat.setColumns(10);
 
 		JLabel lblDiscount = new JLabel("Discount %");
-		lblDiscount.setBounds(383, 183, 89, 18);
+		lblDiscount.setBounds(385, 259, 89, 18);
 		panel.add(lblDiscount);
 
 		txtDiscount = new JTextField();
 		txtDiscount.setText("0.0");
-		txtDiscount.setBounds(521, 184, 171, 20);
+		txtDiscount.setBounds(523, 260, 171, 20);
 		panel.add(txtDiscount);
 		txtDiscount.setColumns(10);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(67, 169, 625, 3);
+		separator.setBounds(69, 206, 625, 3);
 		panel.add(separator);
 
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(67, 378, 625, 2);
+		separator_1.setBounds(69, 454, 625, 2);
 		panel.add(separator_1);
 
 		txtAreaOffer = new JTextArea();
-		txtAreaOffer.setBounds(177, 281, 514, 36);
+		txtAreaOffer.setBounds(180, 354, 514, 36);
 		panel.add(txtAreaOffer);
 
 		txtAreaDesc = new JTextArea();
-		txtAreaDesc.setBounds(177, 327, 514, 43);
+		txtAreaDesc.setBounds(180, 400, 514, 43);
 		panel.add(txtAreaDesc);
+		
+		JLabel lblNewLabel = new JLabel("Accessory Name");
+		lblNewLabel.setBounds(70, 79, 153, 14);
+		panel.add(lblNewLabel);
+		
+		JLabel lblAccessoryType = new JLabel("Accessory Type");
+		lblAccessoryType.setBounds(69, 14, 153, 14);
+		panel.add(lblAccessoryType);
 
+	}
+	private void newTypeFilter() {
+		RowFilter<StockTableModel, Object> rf = null;
+		// If current expression doesn't parse, don't update.
+		try {
+			 rf = RowFilter.regexFilter("(?i)"+comboAccType.getSelectedItem().toString().replaceAll("\\(", "\\\\(").replaceAll("\\)", "\\\\)"), 3);
+		} catch (java.util.regex.PatternSyntaxException e) {
+			return;
+		}
+		sorter.setRowFilter(rf);
 	}
 
 	/**
@@ -413,7 +511,38 @@ public class AccessoryBilling extends JFrame {
 			}
 		}
 	}
+	
+	/**
+	 * Update the row filter regular expression from the expression in the text
+	 * box.
+	 */
+	private void accNameFilter() {
+		RowFilter<StockTableModel, Object> rf = null;
+		// If current expression doesn't parse, don't update.
+		try {
+			 rf = RowFilter.regexFilter("(?i)"+accNameSearchCombo.getSelectedItem().toString().replaceAll("\\(", "\\\\(").replaceAll("\\)", "\\\\)"), 2);
+		} catch (java.util.regex.PatternSyntaxException e) {
+			return;
+		}
+		sorter.setRowFilter(rf);
+	}
 
+	class MyItemAccNameListener implements ItemListener {
+		// This method is called only if a new item has been selected.
+		public void itemStateChanged(ItemEvent evt) {
+			JComboBox cb = (JComboBox) evt.getSource();
+
+			Object item = evt.getItem();
+
+			if (evt.getStateChange() == ItemEvent.SELECTED) {
+				// Item was just selected
+				accNameFilter();
+			} else if (evt.getStateChange() == ItemEvent.DESELECTED) {
+				// Item is no longer selected
+				// newFilter();
+			}
+		}
+	}
 	class StockTableModel extends AbstractTableModel {
 		private String[] columnNames = { "Id", "Model", "Acc Name" ,"Type",
 				"Quantity", "Margin", "Selling Price", "Deal Price",

@@ -65,6 +65,7 @@ public class AccessorySearch extends JFrame {
 	private boolean DEBUG = false;
 	private Float totalCost = (float) 0.0;
 	AutocompleteJComboBox comboModelSearch;
+	AutocompleteJComboBox accNameSearchCombo;
 	JComboBox comboAccType;
 	ConfigurableApplicationContext context = ConfigBuilder.getAppContext();
 
@@ -72,8 +73,8 @@ public class AccessorySearch extends JFrame {
 			.getBean("accessoryStockService");
 	// PhoneStockService pss = (PhoneStockService)
 	// context.getBean("phoneStockService");
-	SalesService ss = (SalesService) context.getBean("salesService");
 	private JTextField txtModel;
+	private JLabel lblAccessoryName;
 
 	/**
 	 * Launch the application.
@@ -96,7 +97,6 @@ public class AccessorySearch extends JFrame {
 	 * Create the frame.
 	 */
 	public AccessorySearch() {
-		setAlwaysOnTop(true);
 		setType(Type.POPUP);
 		setTitle("Accessory Stock Search");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -122,41 +122,72 @@ public class AccessorySearch extends JFrame {
 		panel.add(lblAccessoryType);
 
 		List<String> accType = new ArrayList<String>();
-		accType.add("Tamper Glass");
 		accType.add("Ear Phones");
-		accType.add("Head Phones");
-		accType.add("Flip Cover");
-		accType.add("Back Pouch");
-		accType.add("Tab Cover");
+		accType.add("Data cable");
+		accType.add("Bluetooth & Headset");
+	accType.add("Bluetooth Speakers");
+	accType.add("FlipCover");
+	accType.add("Tab Covers");
+	accType.add("Adaptor & Chargers");
+	accType.add("Multi Data Cable");
+	accType.add("Back Pouch (Photo Case)");
+	accType.add("Back Pouch(Rajasthani Print)");
+	accType.add("Back Pouch (Silicon)");
+	accType.add("Tampered Glass");
+	accType.add("Screen Guard(Clear)");
+	accType.add("Screen Guard(Matt)");
+	accType.add("Screen Guard(Ultra Clear)");
+	accType.add("Spike");
+	accType.add("Mirco Card Reader");
 
 		comboAccType = new JComboBox();
 		comboAccType.setBounds(279, 14, 415, 20);
-
-		panel.add(comboAccType);
 		for (String type : accType) {
 			comboAccType.addItem(type);
+		
 		}
+		
+		comboAccType.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				newTypeFilter();
+			}
+			
+		});
+		panel.add(comboAccType);
+		
 
 		JLabel lblModel = new JLabel("Phone Model");
-		lblModel.setBounds(67, 38, 153, 22);
+		lblModel.setBounds(67, 42, 153, 22);
 		panel.add(lblModel);
 
 		List<String> modelsList = new ArrayList<String>();
+		List<String> accNameList = new ArrayList<String>();
 
 		PhoneModelService pms = (PhoneModelService) context
 				.getBean("phoneModelService");
 
 		modelsList = pms.getAllModelNames();
-
+		accNameList = as.getAllAccNames();
 		StringSearchable searchable = new StringSearchable(modelsList);
 
 		comboModelSearch = new AutocompleteJComboBox(searchable);
 		final StockTableModel stockModel = new StockTableModel();
 		sorter = new TableRowSorter<StockTableModel>(stockModel);
+		
+		
+		
+		StringSearchable searchableAccModel = new StringSearchable(accNameList);
+		accNameSearchCombo = new AutocompleteJComboBox(searchableAccModel);
+		accNameSearchCombo.addItemListener(new MyItemAccNameListener());
+		accNameSearchCombo.setBounds(279, 71, 415, 22);
+		panel.add(accNameSearchCombo);
 
 		// Create the scroll pane and add the table to it.
 		JScrollPane stockScrollPane = new JScrollPane();
-		stockScrollPane.setBounds(67, 71, 625, 214);
+		stockScrollPane.setBounds(67, 116, 625, 214);
 		// Add the scroll pane to this panel.
 		panel.add(stockScrollPane);
 		tableStock = new JTable(stockModel);
@@ -208,7 +239,7 @@ public class AccessorySearch extends JFrame {
 		 */
 		comboModelSearch.addItemListener(new MyItemListener());
 
-		comboModelSearch.setBounds(279, 38, 415, 22);
+		comboModelSearch.setBounds(279, 42, 415, 22);
 		panel.add(comboModelSearch);
 
 		JLabel lblPrice = new JLabel("Selling Price");
@@ -248,7 +279,22 @@ public class AccessorySearch extends JFrame {
 		txtModel.setBounds(265, 342, 427, 20);
 		panel.add(txtModel);
 		txtModel.setColumns(10);
+		
+		lblAccessoryName = new JLabel("Accessory Name");
+		lblAccessoryName.setBounds(67, 75, 128, 14);
+		panel.add(lblAccessoryName);
 
+	}
+	
+	private void newTypeFilter() {
+		RowFilter<StockTableModel, Object> rf = null;
+		// If current expression doesn't parse, don't update.
+		try {
+			 rf = RowFilter.regexFilter("(?i)"+comboAccType.getSelectedItem().toString().replaceAll("\\(", "\\\\(").replaceAll("\\)", "\\\\)"), 3);
+		} catch (java.util.regex.PatternSyntaxException e) {
+			return;
+		}
+		sorter.setRowFilter(rf);
 	}
 
 	/**
@@ -276,6 +322,38 @@ public class AccessorySearch extends JFrame {
 			if (evt.getStateChange() == ItemEvent.SELECTED) {
 				// Item was just selected
 				newFilter();
+			} else if (evt.getStateChange() == ItemEvent.DESELECTED) {
+				// Item is no longer selected
+				// newFilter();
+			}
+		}
+	}
+	
+	/**
+	 * Update the row filter regular expression from the expression in the text
+	 * box.
+	 */
+	private void accNameFilter() {
+		RowFilter<StockTableModel, Object> rf = null;
+		// If current expression doesn't parse, don't update.
+		try {
+			 rf = RowFilter.regexFilter("(?i)"+accNameSearchCombo.getSelectedItem().toString().replaceAll("\\(", "\\\\(").replaceAll("\\)", "\\\\)"), 2);
+		} catch (java.util.regex.PatternSyntaxException e) {
+			return;
+		}
+		sorter.setRowFilter(rf);
+	}
+
+	class MyItemAccNameListener implements ItemListener {
+		// This method is called only if a new item has been selected.
+		public void itemStateChanged(ItemEvent evt) {
+			JComboBox cb = (JComboBox) evt.getSource();
+
+			Object item = evt.getItem();
+
+			if (evt.getStateChange() == ItemEvent.SELECTED) {
+				// Item was just selected
+				accNameFilter();
 			} else if (evt.getStateChange() == ItemEvent.DESELECTED) {
 				// Item is no longer selected
 				// newFilter();

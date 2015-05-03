@@ -180,7 +180,7 @@ public class BalanceSheet extends JFrame {
 			    htmlString += "<tr><td><b>Today's Phone Sale Profit :</b></td><td>"+f.getProfit()+"</td></tr>";
 			    htmlString += "<tr><td><b>Today's Acc. Sale :</b></td><td>"+f.getAccSale()+"</td></tr>";
 			    htmlString += "<tr><td><b>Today's Acc. Sale Profit :</b></td><td>"+f.getAccProfit()+"</td></tr>";
-			    float todaysProfit = f.getAccProfit()+f.getProfit()+(f.getRecharges()*3/100);
+			    float todaysProfit = (float) (f.getAccProfit()+f.getProfit()+((f.getRecharges()*2.8)/100));
 			    float todaysSale = f.getAccSale()+f.getPhoneSale();
 			    float todaysExpense = f.getExpense();
 			    float effProfit = todaysProfit-todaysExpense;

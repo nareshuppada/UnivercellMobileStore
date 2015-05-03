@@ -134,7 +134,7 @@ public class SalesBilling extends JFrame {
         filterText.setBounds(279, 10, 415, 22);
         panel.add(filterText);*/
 		JLabel lblModel = new JLabel("Phone Model");
-		lblModel.setBounds(67, 38, 153, 22);
+		lblModel.setBounds(67, 11, 153, 22);
 		panel.add(lblModel);
 		
 		List<String> modelsList = new ArrayList<String>();
@@ -153,7 +153,7 @@ public class SalesBilling extends JFrame {
 
 	        //Create the scroll pane and add the table to it.
 	        JScrollPane stockScrollPane = new JScrollPane();
-	        stockScrollPane.setBounds(67, 71, 625, 87);
+	        stockScrollPane.setBounds(67, 44, 625, 167);
 	        //Add the scroll pane to this panel.
 	        panel.add(stockScrollPane);
 	        tableStock = new JTable(stockModel);
@@ -205,24 +205,24 @@ public class SalesBilling extends JFrame {
 	        comboModelSearch.addItemListener(new MyItemListener());
 	        
 	       
-		comboModelSearch.setBounds(279, 38, 415, 22);
+		comboModelSearch.setBounds(279, 11, 415, 22);
 		panel.add(comboModelSearch);
 		
 		JLabel lblPrice = new JLabel("Selling Price");
-		lblPrice.setBounds(67, 183, 128, 22);
+		lblPrice.setBounds(67, 263, 128, 22);
 		panel.add(lblPrice);
 		
 		txtPrice = new JTextField();
-		txtPrice.setBounds(177, 184, 171, 20);
+		txtPrice.setBounds(177, 264, 171, 20);
 		panel.add(txtPrice);
 		txtPrice.setColumns(10);
 		
 		JLabel lblOffer = new JLabel("Offer Details");
-		lblOffer.setBounds(67, 282, 153, 22);
+		lblOffer.setBounds(68, 359, 153, 22);
 		panel.add(lblOffer);
 		
 		JLabel lblDescription = new JLabel("Description");
-		lblDescription.setBounds(69, 328, 153, 22);
+		lblDescription.setBounds(70, 405, 153, 22);
 		panel.add(lblDescription);
 		
 		im = new InvoiceTableModel();
@@ -232,7 +232,7 @@ public class SalesBilling extends JFrame {
 		
 		
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(67, 415, 625, 185);
+		scrollPane.setBounds(67, 505, 625, 95);
 		panel.add(scrollPane);
 		
 		JButton btnAddStock = new JButton("Add to Sale");
@@ -308,7 +308,7 @@ public class SalesBilling extends JFrame {
 				
 			}
 		});
-		btnAddStock.setBounds(559, 381, 133, 23);
+		btnAddStock.setBounds(559, 471, 133, 23);
 		panel.add(btnAddStock);
 		
 		/*JLabel lblTotalCost = new JLabel("Total Stock Added Cost : ");
@@ -350,7 +350,7 @@ public class SalesBilling extends JFrame {
 				
 			}
 		});
-		btnConfirmSale.setBounds(67, 628, 128, 23);
+		btnConfirmSale.setBounds(67, 630, 128, 23);
 		panel.add(btnConfirmSale);
 		
 		txtGrandTotal = new JTextField();
@@ -363,66 +363,66 @@ public class SalesBilling extends JFrame {
 		txtGrandTotal.setColumns(10);
 		
 		JLabel lblCustomerName = new JLabel("Customer Name");
-		lblCustomerName.setBounds(67, 217, 107, 20);
+		lblCustomerName.setBounds(67, 297, 107, 20);
 		panel.add(lblCustomerName);
 		
 		txtCustName = new JTextField();
-		txtCustName.setBounds(177, 216, 171, 22);
+		txtCustName.setBounds(177, 296, 171, 22);
 		panel.add(txtCustName);
 		txtCustName.setColumns(10);
 		
 		JLabel lblCustomerContact = new JLabel("Customer Contact");
-		lblCustomerContact.setBounds(379, 216, 107, 22);
+		lblCustomerContact.setBounds(379, 296, 107, 22);
 		panel.add(lblCustomerContact);
 		
 		txtCustContact = new JTextField();
-		txtCustContact.setBounds(521, 216, 171, 21);
+		txtCustContact.setBounds(521, 296, 171, 21);
 		panel.add(txtCustContact);
 		txtCustContact.setColumns(10);
 		
 		JLabel lblInvoiceNo = new JLabel("Invoice No");
-		lblInvoiceNo.setBounds(67, 11, 153, 22);
+		lblInvoiceNo.setBounds(67, 236, 101, 22);
 		panel.add(lblInvoiceNo);
 		
 		txtInvoiceId = new JTextField();
-		txtInvoiceId.setBounds(279, 12, 413, 20);
+		txtInvoiceId.setBounds(177, 237, 171, 20);
 		panel.add(txtInvoiceId);
 		txtInvoiceId.setColumns(10);
 		
 		JLabel lblVatt = new JLabel("VAT");
-		lblVatt.setBounds(67, 249, 82, 18);
+		lblVatt.setBounds(67, 329, 82, 18);
 		panel.add(lblVatt);
 		
 		txtVat = new JTextField();
 		txtVat.setText("5.0");
-		txtVat.setBounds(177, 248, 171, 20);
+		txtVat.setBounds(177, 328, 171, 20);
 		panel.add(txtVat);
 		txtVat.setColumns(10);
 		
 		JLabel lblDiscount = new JLabel("Discount %");
-		lblDiscount.setBounds(383, 183, 89, 18);
+		lblDiscount.setBounds(383, 263, 89, 18);
 		panel.add(lblDiscount);
 		
 		txtDiscount = new JTextField();
 		txtDiscount.setText("0.0");
-		txtDiscount.setBounds(521, 184, 171, 20);
+		txtDiscount.setBounds(521, 264, 171, 20);
 		panel.add(txtDiscount);
 		txtDiscount.setColumns(10);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(67, 169, 625, 3);
+		separator.setBounds(67, 222, 625, 3);
 		panel.add(separator);
 		
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(67, 378, 625, 2);
+		separator_1.setBounds(67, 462, 625, 2);
 		panel.add(separator_1);
 		
 		txtAreaOffer = new JTextArea();
-		txtAreaOffer.setBounds(177, 281, 514, 36);
+		txtAreaOffer.setBounds(178, 358, 514, 36);
 		panel.add(txtAreaOffer);
 		
 		txtAreaDesc = new JTextArea();
-		txtAreaDesc.setBounds(177, 327, 514, 43);
+		txtAreaDesc.setBounds(178, 404, 514, 43);
 		panel.add(txtAreaDesc);
 		
 		
