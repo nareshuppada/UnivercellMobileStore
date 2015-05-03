@@ -8,22 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.univercellmobiles.app.beans.Brand;
-import com.univercellmobiles.app.beans.Invoice;
 import com.univercellmobiles.app.beans.PhoneModel;
 
 @Repository("phoneModel")
 public class PhoneModelDaoImpl implements PhoneModelDao{
-	@Autowired
+	@Autowired 
 	private SessionFactory sessionFactory;
 	
 	private Session getCurrentSession() {
 		return sessionFactory.getCurrentSession();
 	}
-	public void add(Invoice invoice) {
-		// TODO Auto-generated method stub
-		getCurrentSession().save(invoice);
-		
-	}
+
 
 	public void add(PhoneModel phoneModel) {
 		// TODO Auto-generated method stub

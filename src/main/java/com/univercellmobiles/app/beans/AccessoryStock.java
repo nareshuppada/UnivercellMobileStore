@@ -20,7 +20,6 @@ public class AccessoryStock {
 	private String accModel;
 	private String phmodelName;
 	private String accType;
-	private Date soldDate;
 	private String desription;
 	private Float margin;
 	private Float marginAmount;
@@ -64,12 +63,7 @@ public class AccessoryStock {
 	public void setArrivalDate(Date arrivalDate) {
 		this.arrivalDate = arrivalDate;
 	}
-	public Date getSoldDate() {
-		return soldDate;
-	}
-	public void setSoldDate(Date soldDate) {
-		this.soldDate = soldDate;
-	}
+
 	/**
 	 * @return the accStockId
 	 */
