@@ -171,7 +171,7 @@ public class InvestmentManagement extends JFrame {
 		
 		 table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		 
-		 JLabel lblExpenseType = new JLabel("Expense Type");
+		 JLabel lblExpenseType = new JLabel("Investment Type");
 		 lblExpenseType.setBounds(67, 29, 187, 23);
 		 panel.add(lblExpenseType);
 		 

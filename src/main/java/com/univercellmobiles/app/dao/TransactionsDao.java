@@ -19,6 +19,7 @@ public interface TransactionsDao {
 	public float getInvestmentOut();
 	public float getInvestmentBalance();
 	public float getTodaysExpense();
+	public float getAvgExpense();
 
 
 }

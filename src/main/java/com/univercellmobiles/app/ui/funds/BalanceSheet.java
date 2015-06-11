@@ -187,12 +187,13 @@ public class BalanceSheet extends JFrame {
 			    htmlString += "<tr><td><b>Today's Total Sale(Phone + Acc) :</b></td><td>"+todaysSale+"</td></tr>";
 			    htmlString += "<tr><td><b>Today's Total Profit(Phone + Acc + Recharges) :</b></td><td>"+todaysProfit+"</td></tr>";
 			    htmlString += "<tr><td><b>Today's Expense :</b></td><td>"+todaysExpense+"</td></tr>";
+			    htmlString += "<tr><td><b>Avg Daily Expense :</b></td><td>"+txs.getAvgExpense()+"</td></tr>";
 			    htmlString += "<tr><td><b>Today's Effective Profit :</b></td><td>"+effProfit+"</td></tr>";
 			    
 			    
 			    
 			   
-			    float currValue=f.getCash()+f.getAccStockValue()+f.getUnivercellfunds()+f.getReturns()+f.getDeposits()+f.getAssets();
+			    float currValue=f.getCash()+f.getStockValue()+f.getAccStockValue()+f.getUnivercellfunds()+f.getReturns()+f.getDeposits()+f.getAssets();
 				
 				float growth = currValue-f.getInvestment();
 				
@@ -210,10 +211,10 @@ public class BalanceSheet extends JFrame {
 				fm.fireTableDataChanged();
 				
 				SendEmail.sendHTMLasMail(htmlString);
-				txtReturns.setText("");
 				txtUniFunds.setText("");
 				txtDeposits.setText("");
 				txtCash.setText("");
+				txtRecharges.setText("");
 
 			}
 		});

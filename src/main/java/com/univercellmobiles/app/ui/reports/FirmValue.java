@@ -405,6 +405,8 @@ public class FirmValue extends JFrame {
 		txtTotalSale.setText(Float.toString(todaysSale));
 		txtEffCash.setText(Float.toString(appxtodaysCash));
 		txtEffProfit.setText(Float.toString(effProfit));
+		txtExpense.setText(Float.toString(todaysExpense));
+		txtProfit.setText(Float.toString(todaysProfit+todayRechargProfit));
 		
 		txtAccStockValue.setText(Float.toString(accstock));
 		if(currFundStatus.getToday()!=null){

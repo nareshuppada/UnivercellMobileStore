@@ -83,6 +83,11 @@ public class TransactionServiceImpl implements TransactionService {
 		// TODO Auto-generated method stub
 		return transDao.getTodaysExpense();
 	}
+
+	public float getAvgExpense() {
+		// TODO Auto-generated method stub
+		return transDao.getAvgExpense()/30;
+	}
 	
 	
 	
