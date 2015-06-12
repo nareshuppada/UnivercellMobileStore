@@ -54,6 +54,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.Dimension;
 
 import javax.swing.JTextArea;
@@ -86,6 +88,7 @@ public class SalesHistory extends JFrame {
 		private JTextField txtDP;
 		private JLabel lblTotalPruchases;
 		private JTextField txtPurchases;
+		private JTextField txtScanIMEI;
 	
 	
 	/**
@@ -179,6 +182,9 @@ public class SalesHistory extends JFrame {
 		txtPurchases.setBounds(779, 379, 174, 28);
 		panel.add(txtPurchases);
 		txtPurchases.setColumns(10);
+		
+		
+		
 		 final SalesTableModel  salesModel = new SalesTableModel();
 	        sorter = new TableRowSorter<SalesTableModel>(salesModel);
 	        
@@ -306,13 +312,40 @@ public class SalesHistory extends JFrame {
 		panel.add(txtDP);
 		txtDP.setColumns(10);
 		
+		txtScanIMEI = new JTextField();
+		txtScanIMEI.setToolTipText("Place cursor here and Scan");
+		txtScanIMEI.setBounds(279, 7, 413, 20);
+		panel.add(txtScanIMEI);
+		txtScanIMEI.setColumns(10);
+		
+		txtScanIMEI.addKeyListener(new KeyAdapter() {
+		      public void keyReleased(KeyEvent e) {
+		        JTextField textField = (JTextField) e.getSource();
+		        String text = textField.getText();
+		        if(text.length()==10){
+		        	newBarCodeIMEFilter();
+		        }
+		        textField.setText(text.toUpperCase());
+		      }
+		});
+		
 		
 		
 		
 		
 		
 	}
-	
+
+	 private void newBarCodeIMEFilter() {
+	        RowFilter<SalesTableModel, Object> rf = null;
+	        //If current expression doesn't parse, don't update.
+	        try {
+	        	 rf = RowFilter.regexFilter(txtScanIMEI.getText(), 3);
+	        } catch (java.util.regex.PatternSyntaxException e) {
+	            return;
+	        }
+	        sorter.setRowFilter(rf);
+	    }
 	
 
 	

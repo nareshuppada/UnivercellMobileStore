@@ -48,9 +48,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.Dimension;
 
 import javax.swing.JTextArea;
+
 import java.awt.Window.Type;
 
 public class InventoryManagement extends JFrame {
@@ -72,6 +75,7 @@ public class InventoryManagement extends JFrame {
 		private JTextField txtModel;
 		private JTextField txtDP;
 		private JTextField txtIEMI;
+		private JTextField txtScanIMEI;
 	
 	
 	/**
@@ -123,6 +127,7 @@ public class InventoryManagement extends JFrame {
         filterText.setBounds(279, 10, 415, 22);
         panel.add(filterText);*/
 		JLabel lblModel = new JLabel("Phone Model");
+		lblModel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblModel.setBounds(67, 38, 153, 22);
 		panel.add(lblModel);
 		
@@ -292,8 +297,41 @@ public class InventoryManagement extends JFrame {
 		panel.add(txtIEMI);
 		txtIEMI.setColumns(10);
 		
+		txtScanIMEI = new JTextField();
+		txtScanIMEI.setToolTipText("Place cursor here and Scan");
+		txtScanIMEI.setBounds(279, 7, 413, 20);
+		panel.add(txtScanIMEI);
+		txtScanIMEI.setColumns(10);
+		
+		JLabel lblImeiNo = new JLabel("IMEI No.");
+		lblImeiNo.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblImeiNo.setBounds(67, 13, 46, 14);
+		panel.add(lblImeiNo);
+		
+		txtScanIMEI.addKeyListener(new KeyAdapter() {
+		      public void keyReleased(KeyEvent e) {
+		        JTextField textField = (JTextField) e.getSource();
+		        String text = textField.getText();
+		        if(text.length()==10){
+		        	newBarCodeIMEFilter();
+		        }
+		        textField.setText(text.toUpperCase());
+		      }
+		});
+		
 		
 	}
+	
+	private void newBarCodeIMEFilter() {
+        RowFilter<StockTableModel, Object> rf = null;
+        //If current expression doesn't parse, don't update.
+        try {
+        	 rf = RowFilter.regexFilter(txtScanIMEI.getText(), 2);
+        } catch (java.util.regex.PatternSyntaxException e) {
+            return;
+        }
+        sorter.setRowFilter(rf);
+    }
 	
 	 /** 
      * Update the row filter regular expression from the expression in

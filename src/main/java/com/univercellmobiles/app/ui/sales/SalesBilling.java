@@ -50,6 +50,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.Dimension;
 
 import javax.swing.JSeparator;
@@ -82,6 +84,7 @@ public class SalesBilling extends JFrame {
 		private JTextField txtDiscount;
 		JTextArea txtAreaOffer;
 		JTextArea txtAreaDesc;
+		private JTextField txtScanIMEI;
 	
 	
 	/**
@@ -134,7 +137,8 @@ public class SalesBilling extends JFrame {
         filterText.setBounds(279, 10, 415, 22);
         panel.add(filterText);*/
 		JLabel lblModel = new JLabel("Phone Model");
-		lblModel.setBounds(67, 11, 153, 22);
+		lblModel.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblModel.setBounds(67, 53, 153, 22);
 		panel.add(lblModel);
 		
 		List<String> modelsList = new ArrayList<String>();
@@ -153,7 +157,7 @@ public class SalesBilling extends JFrame {
 
 	        //Create the scroll pane and add the table to it.
 	        JScrollPane stockScrollPane = new JScrollPane();
-	        stockScrollPane.setBounds(67, 44, 625, 167);
+	        stockScrollPane.setBounds(67, 86, 625, 125);
 	        //Add the scroll pane to this panel.
 	        panel.add(stockScrollPane);
 	        tableStock = new JTable(stockModel);
@@ -205,7 +209,7 @@ public class SalesBilling extends JFrame {
 	        comboModelSearch.addItemListener(new MyItemListener());
 	        
 	       
-		comboModelSearch.setBounds(279, 11, 415, 22);
+		comboModelSearch.setBounds(279, 53, 415, 22);
 		panel.add(comboModelSearch);
 		
 		JLabel lblPrice = new JLabel("Selling Price");
@@ -425,8 +429,41 @@ public class SalesBilling extends JFrame {
 		txtAreaDesc.setBounds(178, 404, 514, 43);
 		panel.add(txtAreaDesc);
 		
+		txtScanIMEI = new JTextField();
+		txtScanIMEI.setToolTipText("Place cursor here and Scan");
+		txtScanIMEI.setBounds(279, 18, 413, 20);
+		panel.add(txtScanIMEI);
+		txtScanIMEI.setColumns(10);
+		
+		JLabel lblImeiNo = new JLabel("IMEI No.");
+		lblImeiNo.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblImeiNo.setBounds(67, 21, 46, 14);
+		panel.add(lblImeiNo);
+		
+		txtScanIMEI.addKeyListener(new KeyAdapter() {
+		      public void keyReleased(KeyEvent e) {
+		        JTextField textField = (JTextField) e.getSource();
+		        String text = textField.getText();
+		        if(text.length()==10){
+		        	newBarCodeIMEFilter();
+		        }
+		        textField.setText(text.toUpperCase());
+		      }
+		});
+		
 		
 	}
+	
+	 private void newBarCodeIMEFilter() {
+	        RowFilter<StockTableModel, Object> rf = null;
+	        //If current expression doesn't parse, don't update.
+	        try {
+	        	 rf = RowFilter.regexFilter(txtScanIMEI.getText(), 2);
+	        } catch (java.util.regex.PatternSyntaxException e) {
+	            return;
+	        }
+	        sorter.setRowFilter(rf);
+	    }
 	
 	 /** 
      * Update the row filter regular expression from the expression in
