@@ -16,5 +16,6 @@ public interface AccessorySalesDao {
 	public List<AccessorySales> getSalesByRange(Date fromDate, Date toDate);
 	public float getTodaysProfit();
 	public float getTodaysSale();
+	public float get30DayProfit();
 
 }

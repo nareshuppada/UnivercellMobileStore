@@ -13,6 +13,7 @@ public interface FundStatusDao {
 	public void delete(int fundStatusId);
 	public List<FundStatus> getAllDetails();
 	public List<FundStatus> getCurrentTxnDetails();
+	public List<FundStatus> getLastMonthDetails();
 
 
 }

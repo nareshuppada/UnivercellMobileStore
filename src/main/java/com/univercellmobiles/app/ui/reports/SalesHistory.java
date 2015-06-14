@@ -56,6 +56,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.print.PrinterException;
 import java.awt.Dimension;
 
 import javax.swing.JTextArea;
@@ -89,6 +90,7 @@ public class SalesHistory extends JFrame {
 		private JLabel lblTotalPruchases;
 		private JTextField txtPurchases;
 		private JTextField txtScanIMEI;
+		private JLabel lblImeiNo;
 	
 	
 	/**
@@ -113,7 +115,6 @@ public class SalesHistory extends JFrame {
 	 */
 	public SalesHistory() {
 		setType(Type.POPUP);
-		setAlwaysOnTop(true);
 		setTitle("Sales History");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1002, 707);
@@ -279,10 +280,12 @@ public class SalesHistory extends JFrame {
 		txtModel.setColumns(10);
 		
 		lblFromDate = new JLabel("From Date");
+		lblFromDate.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblFromDate.setBounds(67, 32, 70, 28);
 		panel.add(lblFromDate);
 		
 		lblToDate = new JLabel("To Date");
+		lblToDate.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblToDate.setBounds(323, 32, 64, 28);
 		panel.add(lblToDate);
 		
@@ -314,9 +317,28 @@ public class SalesHistory extends JFrame {
 		
 		txtScanIMEI = new JTextField();
 		txtScanIMEI.setToolTipText("Place cursor here and Scan");
-		txtScanIMEI.setBounds(279, 7, 413, 20);
+		txtScanIMEI.setBounds(135, 7, 403, 20);
 		panel.add(txtScanIMEI);
 		txtScanIMEI.setColumns(10);
+		
+		lblImeiNo = new JLabel("IMEI No.");
+		lblImeiNo.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblImeiNo.setBounds(67, 13, 46, 14);
+		panel.add(lblImeiNo);
+		
+		JButton btnPrint = new JButton("Print");
+		btnPrint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					tableStock.print();
+				} catch (PrinterException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnPrint.setBounds(67, 311, 89, 23);
+		panel.add(btnPrint);
 		
 		txtScanIMEI.addKeyListener(new KeyAdapter() {
 		      public void keyReleased(KeyEvent e) {

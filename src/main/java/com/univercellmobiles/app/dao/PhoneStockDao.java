@@ -16,5 +16,7 @@ public interface PhoneStockDao {
     public List<PhoneStock> getAllAvailable();
 	public float getCurrentStockValue();
 	public List<PhoneStock> getPurchaseByRange(Date fromDate, Date toDate);
+	public float get30DaysPurchase();
+	
 
 }

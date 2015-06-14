@@ -52,6 +52,11 @@ public class FundStatusServiceImpl implements FundStatusService {
 		return fundsDao.getCurrentTxnDetails();
 	}
 
+	public List<FundStatus> getLastMonthDetails() {
+		// TODO Auto-generated method stub
+		return fundsDao.getLastMonthDetails();
+	}
+
 	
 
 	

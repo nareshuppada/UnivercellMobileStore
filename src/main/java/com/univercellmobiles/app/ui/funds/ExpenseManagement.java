@@ -69,6 +69,8 @@ public class ExpenseManagement extends JFrame {
 	JTextArea textAreaDesc;
 	JComboBox comboExpenseType;
 	TransactionService txs;
+	 JLabel expensetoday;
+	 JLabel expense30;
 
 	/**
 	 * Launch the application.
@@ -188,6 +190,32 @@ public class ExpenseManagement extends JFrame {
 		 textAreaDesc.setBounds(291, 96, 401, 83);
 		 panel.add(textAreaDesc);
 		 
+		 JLabel lblLastDays = new JLabel("Last 30 days Expense :");
+		 lblLastDays.setFont(new Font("Tahoma", Font.BOLD, 11));
+		 lblLastDays.setBounds(67, 554, 145, 23);
+		 panel.add(lblLastDays);
+		 
+		 JLabel lblAvgExpensePer = new JLabel("Avg Expense per Day :");
+		 lblAvgExpensePer.setFont(new Font("Tahoma", Font.BOLD, 11));
+		 lblAvgExpensePer.setBounds(67, 588, 145, 20);
+		 panel.add(lblAvgExpensePer);
+		 
+		 expense30 = new JLabel("0.0");
+		 expense30.setForeground(Color.RED);
+		 expense30.setFont(new Font("Tahoma", Font.BOLD, 11));
+		 expense30.setBounds(229, 556, 96, 19);
+		 expense30.setText(Float.toString(txs.get30DaysExpense()));
+		 panel.add(expense30);
+		 
+		 expensetoday = new JLabel("0.0");
+		 expensetoday.setForeground(Color.RED);
+		 expensetoday.setFont(new Font("Tahoma", Font.BOLD, 11));
+		 expensetoday.setBounds(229, 590, 96, 17);
+		 expensetoday.setText(Float.toString(txs.getAvgExpense()));
+		 panel.add(expensetoday);
+		 
+		 
+		 
 
 	        
 	        //When selection changes, provide user with row numbers for
@@ -229,7 +257,7 @@ public class ExpenseManagement extends JFrame {
 		private List<Transactions> data = new ArrayList<Transactions>();
 
 		TransactionModel() {
-			 data = txs.getAllExpenseDetails();
+			 data = txs.getLastMonthExpenseDetails();
 		}
 
 		public int getColumnCount() {
@@ -313,7 +341,10 @@ public class ExpenseManagement extends JFrame {
 		}
 
 		public void refreshTableData() {
-			 data = txs.getAllExpenseDetails();
+			 data = txs.getLastMonthExpenseDetails();
+			 expensetoday.setText(Float.toString(txs.getAvgExpense()));
+			 expense30.setText(Float.toString(txs.get30DaysExpense()));
+			 
 		}
 
 		public void addRow(Object record) {

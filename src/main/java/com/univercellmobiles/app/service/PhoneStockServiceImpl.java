@@ -68,4 +68,9 @@ public class PhoneStockServiceImpl implements PhoneStockService{
 		return phoneStockDao.getPurchaseByRange(fromDate, toDate);
 	}
 
+	public float get30DaysPurchase() {
+		// TODO Auto-generated method stub
+		return phoneStockDao.get30DaysPurchase();
+	}
+
 }

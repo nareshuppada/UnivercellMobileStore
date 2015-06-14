@@ -20,6 +20,7 @@ public interface TransactionsDao {
 	public float getInvestmentBalance();
 	public float getTodaysExpense();
 	public float getAvgExpense();
+	public List<Transactions> getLastMonthExpenseDetails();
 
 
 }

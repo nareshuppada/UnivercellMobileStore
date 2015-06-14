@@ -65,4 +65,16 @@ public class SalesServiceImpl implements SalesService {
 		return salesDao.getTodaysSale();
 	}
 
+	public float get30DayProfit() {
+		// TODO Auto-generated method stub
+		return salesDao.get30DayProfit();
+	}
+
+	public float get30DaysSales() {
+		// TODO Auto-generated method stub
+		return salesDao.get30DaysSales();
+	}
+
+
+
 }

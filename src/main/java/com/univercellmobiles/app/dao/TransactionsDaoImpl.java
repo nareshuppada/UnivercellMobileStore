@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -58,6 +59,25 @@ public class TransactionsDaoImpl implements TransactionsDao {
 		// TODO Auto-generated method stub
 		return getCurrentSession().createQuery("from Transactions where type = -1").list();
 	}
+	
+	public List<Transactions> getLastMonthExpenseDetails() {
+		// TODO Auto-generated method stub
+		
+		 Calendar cal = Calendar.getInstance();
+	     cal.setTimeZone(TimeZone.getTimeZone("IST"));
+	     cal.add(Calendar.DATE, 1);
+	     Date toDate = cal.getTime();
+	     cal.add(Calendar.MONTH, -1);
+	     Date fromDate=cal.getTime();
+	     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	     String query = "from Transactions where type = -1 and expenseDate between str_to_date('"+sdf.format(fromDate)+"','%Y-%m-%d') and  str_to_date('"+sdf.format(toDate)+"','%Y-%m-%d')";
+	 		System.out.println(query);
+	 	//	return getCurrentSession().createQuery(query).list();
+
+		return getCurrentSession().createQuery(query).list();
+	}
+	
+	
 	
 	public float getTodaysExpense() {
 		// TODO Auto-generated method stub

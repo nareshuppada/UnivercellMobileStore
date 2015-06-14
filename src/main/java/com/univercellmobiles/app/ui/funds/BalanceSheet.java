@@ -189,6 +189,15 @@ public class BalanceSheet extends JFrame {
 			    htmlString += "<tr><td><b>Today's Expense :</b></td><td>"+todaysExpense+"</td></tr>";
 			    htmlString += "<tr><td><b>Avg Daily Expense :</b></td><td>"+txs.getAvgExpense()+"</td></tr>";
 			    htmlString += "<tr><td><b>Today's Effective Profit :</b></td><td>"+effProfit+"</td></tr>";
+			    htmlString += "<tr><td><b>Last 30 Days Summary :</b></td></tr>";
+			    htmlString += "<tr><td><b>Last 30 Days Purchase :</b></td><td>"+pss.get30DaysPurchase()+"</td></tr>";
+			    htmlString += "<tr><td><b>Last 30 Days Sales :</b></td><td>"+ss.get30DaysSales()+"</td></tr>";
+			    float profit30 = ss.get30DayProfit()+asaless.get30DayProfit();
+			    htmlString += "<tr><td><b>Last 30 Days Profit :</b></td><td>"+profit30+"</td></tr>";
+			    float expense30 =txs.get30DaysExpense();
+			    htmlString += "<tr><td><b>Last 30 Days Expense :</b></td><td>"+expense30+"</td></tr>";
+			    float balance30 = profit30-expense30;
+			    htmlString += "<tr><td><b>Last 30 Days (Profit-Expense) :</b></td><td>"+balance30+"</td></tr>";
 			    
 			    
 			    
@@ -336,7 +345,7 @@ public class BalanceSheet extends JFrame {
 		private List<FundStatus> data = new ArrayList<FundStatus>();
 
 		FundsModel() {
-			 data = fs.getAllDetails();
+			 data = fs.getLastMonthDetails();
 		}
 
 		public int getColumnCount() {
@@ -444,7 +453,7 @@ public class BalanceSheet extends JFrame {
 		}
 
 		public void refreshTableData() {
-			 data = fs.getAllDetails();
+			 data = fs.getLastMonthDetails();
 		}
 
 		public void addRow(Object record) {

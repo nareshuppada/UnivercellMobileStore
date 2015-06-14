@@ -1,6 +1,10 @@
 package com.univercellmobiles.app.dao;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -55,6 +59,22 @@ public class FundStatusDaoImpl implements FundStatusDao {
 	public List<FundStatus> getCurrentTxnDetails() {
 		// TODO Auto-generated method stub
 		return getCurrentSession().createQuery("from FundStatus order by statusId desc").list();
+	}
+
+	public List<FundStatus> getLastMonthDetails() {
+		// TODO Auto-generated method stub
+		 Calendar cal = Calendar.getInstance();
+	     cal.setTimeZone(TimeZone.getTimeZone("IST"));
+	     cal.add(Calendar.DATE, 1);
+	     Date toDate = cal.getTime();
+	     cal.add(Calendar.MONTH, -1);
+	     Date fromDate=cal.getTime();
+	     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	     String query = "from FundStatus where today between str_to_date('"+sdf.format(fromDate)+"','%Y-%m-%d') and  str_to_date('"+sdf.format(toDate)+"','%Y-%m-%d')";
+	 		System.out.println(query);
+	 	//	return getCurrentSession().createQuery(query).list();
+
+		return getCurrentSession().createQuery(query).list();
 	}
 
 

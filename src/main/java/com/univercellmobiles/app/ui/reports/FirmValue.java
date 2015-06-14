@@ -2,6 +2,7 @@ package com.univercellmobiles.app.ui.reports;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Graphics;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,13 +15,28 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.univercellmobiles.app.beans.FundStatus;
+import com.univercellmobiles.app.service.AccessorySalesService;
+import com.univercellmobiles.app.service.AccessoryStockService;
 import com.univercellmobiles.app.service.FundStatusService;
+import com.univercellmobiles.app.service.PhoneStockService;
+import com.univercellmobiles.app.service.ReturnsService;
+import com.univercellmobiles.app.service.SalesService;
+import com.univercellmobiles.app.service.TransactionService;
 import com.univercellmobiles.app.util.ConfigBuilder;
 
 import java.awt.Font;
 import java.awt.Color;
 import java.util.List;
 import java.awt.Window.Type;
+
+import javax.swing.JButton;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 
 public class FirmValue extends JFrame {
 
@@ -34,9 +50,16 @@ public class FirmValue extends JFrame {
 	private JTextField txtTotal;
 	private JTextField txtROI;
 	private JTextField txtGrowth;
+	PhoneStockService pss;
+	AccessoryStockService ass;
+	AccessorySalesService asaless;
+	ReturnsService rs;
+	SalesService ss;
+	FundStatusService fs;
+	TransactionService txs;
 	JLabel lblUpdatedDate;
-	ConfigurableApplicationContext context = ConfigBuilder.getAppContext();
-	FundStatusService fs = (FundStatusService) context.getBean("fundStatusService");
+	
+	
 	private JTextField txtAccStockValue;
 	private JTextField txtReturns;
 	private JTextField txtPhSale;
@@ -50,6 +73,12 @@ public class FirmValue extends JFrame {
 	private JTextField txtExpense;
 	private JTextField txtEffProfit;
 	private JTextField txtEffCash;
+	private JTextField txt30Expense;
+	private JTextField txt30Profit;
+	private JTextField txt30Balance;
+	private JTextField txt30Purchase;
+	private JTextField txt30Sales;
+	JPanel panel;
 
 	/**
 	 * Launch the application.
@@ -73,17 +102,25 @@ public class FirmValue extends JFrame {
 	 * Create the frame.
 	 */
 	public FirmValue() {
-		setAlwaysOnTop(true);
 		setType(Type.POPUP);
 		setTitle("Firm Current Value");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 910, 710);
+		setBounds(100, 100, 910, 740);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		JPanel panel = new JPanel();
+		
+		ConfigurableApplicationContext context = ConfigBuilder.getAppContext();
+		fs = (FundStatusService) context.getBean("fundStatusService");
+		txs = (TransactionService) context.getBean("transactionService");
+		pss = (PhoneStockService) context.getBean("phoneStockService");
+		ss =  (SalesService) context.getBean("salesService");
+		ass= (AccessoryStockService)context.getBean("accessoryStockService");
+		asaless =(AccessorySalesService)context.getBean("accessorySalesService");
+		rs = (ReturnsService)context.getBean("returnService");
+		panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
@@ -130,7 +167,7 @@ public class FirmValue extends JFrame {
 		txtUniFunds.setColumns(10);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(33, 67, 582, 7);
+		separator.setBounds(33, 67, 782, 2);
 		panel.add(separator);
 		
 		JSeparator separator_1 = new JSeparator();
@@ -223,7 +260,7 @@ public class FirmValue extends JFrame {
 		txtReturns = new JTextField();
 		txtReturns.setText("0");
 		txtReturns.setEditable(false);
-		txtReturns.setBounds(584, 214, 204, 20);
+		txtReturns.setBounds(686, 214, 102, 20);
 		panel.add(txtReturns);
 		txtReturns.setColumns(10);
 		
@@ -345,22 +382,22 @@ public class FirmValue extends JFrame {
 		txtExpense.setColumns(10);
 		
 		JLabel lblEffectiveTodaysProfit = new JLabel("Effective Today's Profit");
-		lblEffectiveTodaysProfit.setBounds(489, 582, 147, 14);
+		lblEffectiveTodaysProfit.setBounds(489, 582, 172, 14);
 		panel.add(lblEffectiveTodaysProfit);
 		
 		txtEffProfit = new JTextField();
 		txtEffProfit.setEditable(false);
-		txtEffProfit.setBounds(646, 579, 142, 20);
+		txtEffProfit.setBounds(686, 579, 102, 20);
 		panel.add(txtEffProfit);
 		txtEffProfit.setColumns(10);
 		
 		JLabel lblEffectiveCashAt = new JLabel("Effective Cash At Desk");
-		lblEffectiveCashAt.setBounds(489, 619, 126, 14);
+		lblEffectiveCashAt.setBounds(489, 619, 172, 14);
 		panel.add(lblEffectiveCashAt);
 		
 		txtEffCash = new JTextField();
 		txtEffCash.setEditable(false);
-		txtEffCash.setBounds(646, 616, 142, 20);
+		txtEffCash.setBounds(686, 616, 102, 20);
 		panel.add(txtEffCash);
 		txtEffCash.setColumns(10);
 		
@@ -422,6 +459,119 @@ public class FirmValue extends JFrame {
 		float ROI = (growth/investment)*100;
 		
 		txtROI.setText(Float.toString(ROI));
+		
+		JLabel lblLastDays = new JLabel("Last 30 Days Expense :");
+		lblLastDays.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblLastDays.setBounds(85, 621, 161, 24);
+		panel.add(lblLastDays);
+		
+		JLabel lblLastDays_1 = new JLabel("Last 30 Days Profit :");
+		lblLastDays_1.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblLastDays_1.setBounds(85, 656, 161, 24);
+		panel.add(lblLastDays_1);
+		float expense30 = txs.get30DaysExpense();
+		txt30Expense = new JTextField();
+		txt30Expense.setForeground(Color.RED);
+		txt30Expense.setEditable(false);
+		txt30Expense.setBounds(282, 623, 102, 20);
+		panel.add(txt30Expense);
+		txt30Expense.setText(Float.toString(expense30));
+		txt30Expense.setColumns(10);
+		
+		txt30Profit = new JTextField();
+		txt30Profit.setForeground(Color.BLUE);
+		txt30Profit.setEditable(false);
+		txt30Profit.setBounds(282, 658, 102, 20);
+		panel.add(txt30Profit);
+		float profit30 = ss.get30DayProfit()+asaless.get30DayProfit();
+		txt30Profit.setText(Float.toString(profit30));
+		txt30Profit.setColumns(10);
+		
+		JLabel lblEffectiveLast = new JLabel("Last 30 Days (Profit-Expense) :");
+		lblEffectiveLast.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblEffectiveLast.setBounds(470, 26, 214, 31);
+		panel.add(lblEffectiveLast);
+		
+		txt30Balance = new JTextField();
+		txt30Balance.setText("0.0");
+		txt30Balance.setBackground(Color.DARK_GRAY);
+		txt30Balance.setFont(new Font("Tahoma", Font.BOLD, 15));
+		txt30Balance.setForeground(Color.GREEN);
+		txt30Balance.setEditable(false);
+		txt30Balance.setBounds(694, 26, 120, 31);
+		panel.add(txt30Balance);
+		float balance30 = profit30-expense30;
+		txt30Balance.setText(Float.toString(balance30));
+		txt30Balance.setColumns(10);
+		
+		JSeparator separator_4 = new JSeparator();
+		separator_4.setBounds(33, 529, 1, 2);
+		panel.add(separator_4);
+		
+		JSeparator separator_5 = new JSeparator();
+		separator_5.setBounds(33, 551, 421, 2);
+		panel.add(separator_5);
+		
+		JLabel lblLastDays_2 = new JLabel("Last 30 Days Purchase :");
+		lblLastDays_2.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblLastDays_2.setBounds(85, 562, 161, 24);
+		panel.add(lblLastDays_2);
+		
+		JLabel lblLastDays_3 = new JLabel("Last 30 Days Sales");
+		lblLastDays_3.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblLastDays_3.setBounds(85, 590, 161, 24);
+		panel.add(lblLastDays_3);
+		
+		txt30Purchase = new JTextField();
+		txt30Purchase.setText("0.0");
+		txt30Purchase.setEditable(false);
+		txt30Purchase.setBounds(282, 564, 102, 20);
+		panel.add(txt30Purchase);
+		txt30Purchase.setText(Float.toString(pss.get30DaysPurchase()));
+		txt30Purchase.setColumns(10);
+		
+		txt30Sales = new JTextField();
+		txt30Sales.setText("0.0");
+		txt30Sales.setEditable(false);
+		txt30Sales.setBounds(282, 592, 102, 20);
+		panel.add(txt30Sales);
+		txt30Sales.setText(Float.toString(ss.get30DaysSales()));
+		txt30Sales.setColumns(10);
+		
+		JLabel lblLastDays_4 = new JLabel("Last 30 Days Summary :");
+		lblLastDays_4.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblLastDays_4.setBounds(44, 518, 385, 24);
+		panel.add(lblLastDays_4);
+		
+		JButton btnPrint = new JButton("Print");
+		btnPrint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			    PrinterJob job = PrinterJob.getPrinterJob();
+			    
+			    // set the Printable to the PrinterJob
+			    job.setPrintable(new Printable() {
+			      public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) {
+			        if (pageIndex == 0) {
+			          panel.print(graphics);
+			          return Printable.PAGE_EXISTS;
+			        }
+			        return Printable.NO_SUCH_PAGE;
+			      }
+			    });
+			    
+			    // show the dialog
+			    if (job.printDialog()) {
+			      try {
+			        job.print();
+			      }
+			      catch (PrinterException ex) {
+			        // handle exception
+			      }
+			}
+			}
+		});
+		btnPrint.setBounds(699, 657, 89, 23);
+		panel.add(btnPrint);
 		
 		
 		

@@ -112,5 +112,49 @@ public class SalesDaoImpl implements SalesDao {
 	//	System.out.println(query);
 		return getCurrentSession().createQuery(query).list();
 	}
+	
+	
+	public float get30DayProfit() {
+		// TODO Auto-generated method stub
+				Calendar cal = Calendar.getInstance();
+		        cal.setTime(new Date());
+		        cal.add(Calendar.DATE, -30);
+		        Date fromDate = cal.getTime();
+		        cal.setTime(new Date());
+		        cal.add(Calendar.DATE, 1);
+		        Date toDate = cal.getTime();	
+				// TODO Auto-generated method stub
+				 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				try{
+				float sum = Float.parseFloat(getCurrentSession().createQuery("select sum(margin) from Sales where salesDate between str_to_date('"+sdf.format(fromDate)+"','%Y-%m-%d') and  str_to_date('"+sdf.format(toDate)+"','%Y-%m-%d')").list().get(0).toString());
+				return sum;
+				}
+				catch(Exception e){
+					return 0;
+				}
+	}
+
+	public float get30DaysSales() {
+		// TODO Auto-generated method stub
+				Calendar cal = Calendar.getInstance();
+		        cal.setTime(new Date());
+		        cal.add(Calendar.DATE, -30);
+		        Date fromDate = cal.getTime();
+		        cal.setTime(new Date());
+		        cal.add(Calendar.DATE, 1);
+		        Date toDate = cal.getTime();	
+				// TODO Auto-generated method stub
+				 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				try{
+				float sum = Float.parseFloat(getCurrentSession().createQuery("select sum(salePrice) from Sales where salesDate between str_to_date('"+sdf.format(fromDate)+"','%Y-%m-%d') and  str_to_date('"+sdf.format(toDate)+"','%Y-%m-%d')").list().get(0).toString());
+				return sum;
+				}
+				catch(Exception e){
+					return 0;
+				}
+	}
+
+
+	
 
 }
